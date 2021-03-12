@@ -8,6 +8,23 @@
     <version>1.0.0</version>
     <name>PSG2-2021-G5-52 Petclinic</name>
     
+    <developers>
+    <developer>
+      <id>alvcorcas</id>
+      <name>Alvaro Cortes</name>
+      <email>alvcorcas@alum.us.es</email>
+      <organization>gii-is-psg2</organization>
+      <organizationUrl>https://github.com/gii-is-psg2</organizationUrl>
+      <roles>
+        <role>scrum master</role>
+        <role>developer</role>
+      </roles>
+      <timezone>Europe/Berlin</timezone>
+    </developer>
+        
+        
+  </developers>
+    
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
