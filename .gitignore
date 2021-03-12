@@ -17,3 +17,5 @@ _site/
 
 .vscode/settings.json
 /bin/
+mvnw.cmd
+.vscode/launch.json
