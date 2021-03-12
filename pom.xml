@@ -45,7 +45,19 @@
       </roles>
       <timezone>Europe/Berlin</timezone>
     </developer>
-        
+    
+    <developer>
+        <id>alemorgar4</id>
+        <name>Alejandro Morales Garcia</name>
+        <email>alemorgar4@alum.us.es</email>
+        <organization>gii-is-psg2</organization>
+        <organizationUrl>https://github.com/gii-is-psg2</organizationUrl>
+        <roles>
+          <role>developer</role>
+        </roles>
+        <timezone>Europe/Berlin</timezone>
+      </developer>
+
   </developers>
     
     <parent>
