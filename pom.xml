@@ -34,6 +34,17 @@
       <timezone>Europe/Berlin</timezone>
     </developer>
         
+    <developer>
+      <id>josgrarom</id>
+      <name>José Antonio Grande Romero</name>
+      <email>josgrarom@alum.us.es</email>
+      <organization>gii-is-psg2</organization>
+      <organizationUrl>https://github.com/gii-is-psg2</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>Europe/Berlin</timezone>
+    </developer>
         
   </developers>
     
