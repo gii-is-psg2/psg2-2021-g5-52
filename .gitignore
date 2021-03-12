@@ -16,3 +16,4 @@ target/*
 _site/
 
 .vscode/settings.json
+/bin/
