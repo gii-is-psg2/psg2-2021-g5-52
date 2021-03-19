@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Booking {
+public class Booking extends BaseEntity{
     
     @Column
     @NotNull
