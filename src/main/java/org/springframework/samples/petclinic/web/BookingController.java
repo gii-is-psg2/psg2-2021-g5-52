@@ -1,23 +1,26 @@
+
 package org.springframework.samples.petclinic.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.BookingService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class BookingController {
-	
-	private final BookingService bookingService;
-	private final UserService userService;
-	private final OwnerService ownerService;
-	
+
+	private final BookingService	bookingService;
+	private final UserService		userService;
+	private final OwnerService	ownerService;
+
+
 	@Autowired
 	public BookingController(final BookingService bookingService, final UserService userService, final OwnerService ownerService) {
 		super();
@@ -25,19 +28,13 @@ public class BookingController {
 		this.userService = userService;
 		this.ownerService = ownerService;
 	}
-	
-	@GetMapping("petHotel/{ownerId}")
-	public ModelAndView getMyBookings(@PathVariable("ownerId") final int ownerId) {
-		final ModelAndView mav = new ModelAndView();
-		final User user = this.userService.getUserSession();
-		final Owner owner = this.ownerService.findOwnerById(ownerId);
-		if (!user.equals(owner.getUser())) {
-			mav.setViewName("welcome");
-		} else {
-			mav.setViewName("/petHotel/myBookings");
-			mav.addObject("myBookings", this.bookingService.getOwnersBookings(ownerId));
-		}
+
+	@GetMapping("/petHotel")
+	public ModelAndView getMyBookings() {
+		final ModelAndView mav = new ModelAndView("petHotel/myBookings");
+		final String username = this.userService.getUserSession().getUsername();
+		final Owner owner = this.ownerService.findOwnerByUser(username);
+		mav.addObject("myBookings", this.bookingService.getOwnersBookings(owner));
 		return mav;
 	}
-
 }
