@@ -37,10 +37,7 @@ public class BookingController {
 			mav.setViewName("/petHotel/myBookings");
 			mav.addObject("myBookings", this.bookingService.getOwnersBookings(ownerId));
 		}
-		
 		return mav;
 	}
-
-	
 
 }
