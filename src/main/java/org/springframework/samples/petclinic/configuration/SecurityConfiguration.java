@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -39,6 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
 				.antMatchers("/vets/**").authenticated()
+				.antMatchers("/petHotel/**").authenticated()
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
@@ -58,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication()
-	      .dataSource(dataSource)
+	      .dataSource(this.dataSource)
 	      .usersByUsernameQuery(
 	       "select username,password,enabled "
 	        + "from users "
@@ -67,7 +67,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	       "select username, authority "
 	        + "from authorities "
 	        + "where username = ?")	      	      
-	      .passwordEncoder(passwordEncoder());	
+	      .passwordEncoder(this.passwordEncoder());	
 	}
 	
 	@Bean

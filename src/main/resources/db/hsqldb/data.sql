@@ -7,7 +7,7 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
 -- One vet user, named vet1 with passwor v3t
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
-
+ 
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');
 INSERT INTO vets VALUES (3, 'Linda', 'Douglas');
@@ -62,3 +62,7 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
+INSERT INTO booking(id,start_date,end_date,pet_id) VALUES (1,'2013-01-01','2013-01-02',1);
+INSERT INTO booking(id,start_date,end_date,pet_id) VALUES (2,'2013-01-02','2013-01-03',2);
+INSERT INTO booking(id,start_date,end_date,pet_id) VALUES (3,'2013-01-03','2013-01-04',3);
+INSERT INTO booking(id,start_date,end_date,pet_id) VALUES (4,'2013-01-04','2013-01-05',4);

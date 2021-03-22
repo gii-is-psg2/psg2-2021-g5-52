@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.service;
 
+package org.springframework.samples.petclinic.service;
 
 import java.util.Optional;
 
@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,20 +35,31 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
+
 
 	@Autowired
-	public UserService(UserRepository userRepository) {
+	public UserService(final UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
 	@Transactional
-	public void saveUser(User user) throws DataAccessException {
+	public void saveUser(final User user) throws DataAccessException {
 		user.setEnabled(true);
-		userRepository.save(user);
+		this.userRepository.save(user);
 	}
-	
-	public Optional<User> findUser(String username) {
-		return userRepository.findById(username);
+
+	public Optional<User> findUser(final String username) {
+		return this.userRepository.findById(username);
+	}
+
+	public User getUserSession() {
+		User usuario = new User();
+		try {
+			final Optional<User> user = this.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+			if (user.isPresent()) usuario = user.get();
+		} catch (final Exception e) {
+		}
+		return usuario;
 	}
 }
