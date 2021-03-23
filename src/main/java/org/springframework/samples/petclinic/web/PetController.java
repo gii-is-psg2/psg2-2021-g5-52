@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
@@ -26,6 +27,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -51,23 +53,28 @@ public class PetController {
 	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
 
 	private final PetService petService;
-        private final OwnerService ownerService;
+    private final OwnerService ownerService;
+    private final OwnerController ownerController;
+   
 
 	@Autowired
-	public PetController(PetService petService, OwnerService ownerService) {
+	public PetController(PetService petService, OwnerService ownerService,OwnerController ownerController) {
 		this.petService = petService;
-                this.ownerService = ownerService;
+        this.ownerService = ownerService;
+        this.ownerController=ownerController;
+      
 	}
 
 	@ModelAttribute("types")
 	public Collection<PetType> populatePetTypes() {
 		return this.petService.findPetTypes();
 	}
+/*  Si activamos este método findOwner, deja de funcionar el método de "deletePet" de este controlador
 
 	@ModelAttribute("owner")
 	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
 		return this.ownerService.findOwnerById(ownerId);
-	}
+	}*/
         
         /*@ModelAttribute("pet")
 	public Pet findPet(@PathVariable("petId") Integer petId) {
@@ -78,7 +85,8 @@ public class PetController {
                     result=new Pet();
             return result;
 	}*/
-                
+    
+	
 	@InitBinder("owner")
 	public void initOwnerBinder(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
@@ -150,5 +158,22 @@ public class PetController {
 			return "redirect:/owners/{ownerId}";
 		}
 	}
+        
+        
+   	 	@GetMapping(value = "pets/{petId}/delete")
+        public String deletePet(@PathVariable("petId") int petId, ModelMap model) {
+     		Pet pet = this.petService.findPetById(petId);
+     		try {
+     			
+     			System.out.println(pet);
+     			petService.deletePetAndVisists(pet);
+     			model.addAttribute("message", "Pet deleted successfully!");
+
+     		}catch(DataAccessException e) {
+     			
+    				model.addAttribute("message", "The pet could not be removed");
+     		}
+     		return ownerController.initFindForm(model);
+     	}
 
 }

@@ -70,11 +70,12 @@ public class PetService {
 
 
 	public void deletePetAndVisists(Pet pet) throws DataAccessException{
-		System.out.println("ENTRO DEN DELETE_PET_AND_VISITS");
+		
 		for(Visit v:pet.getVisits()) {
 			visitService.delete(v);
-			System.out.println("Visita eliminada");
+			
 		}
+		
 		petRepository.delete(pet);
 		
 	}

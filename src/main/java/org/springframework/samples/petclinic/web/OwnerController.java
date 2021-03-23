@@ -25,8 +25,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.OwnerService;
+import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -49,10 +51,12 @@ public class OwnerController {
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
 	private final OwnerService ownerService;
+	private final PetService petService; //ELIMINAR ESTO
 
 	@Autowired
-	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService) {
+	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService,PetService petService) {
 		this.ownerService = ownerService;
+		this.petService=petService;
 	}
 
 	@InitBinder
@@ -95,6 +99,7 @@ public class OwnerController {
 			
 		return initFindForm(modelMap);
 	}
+	
 	
 
 	@GetMapping(value = "/owners/find")
