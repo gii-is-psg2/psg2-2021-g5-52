@@ -9,7 +9,7 @@
 <html>
 <petclinic:htmlHeader/>
 
-<body>
+<body background="/resources/images/fondo.jpg">
 <petclinic:bodyHeader menuName="${pageName}"/>
 
 <div class="container-fluid">

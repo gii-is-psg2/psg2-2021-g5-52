@@ -28,6 +28,6 @@
 	<td>
     	<spring:url value="/vets" var="vetsUrl">
         </spring:url>
-       	<a class="btn btn-success" href="${fn:escapeXml(vetsUrl)}"><span class="glyphicon glyphicon-th-list"></span>  Veterinarians List</a>    
+       	<a class="btn btn-default" href="${fn:escapeXml(vetsUrl)}"><span class="glyphicon glyphicon-th-list"></span>  Veterinarians List</a>    
     </td>
 </petclinic:layout>

@@ -11,7 +11,7 @@
 	<td>
     	<spring:url value="/vets/new" var="vetsUrl">
         </spring:url>
-       	<a class="btn btn-success" href="${fn:escapeXml(vetsUrl)}"><span class="glyphicon glyphicon-plus"></span> New Veterinarians</a>    
+       	<a class="btn btn-default" href="${fn:escapeXml(vetsUrl)}"><span class="glyphicon glyphicon-plus"></span> New Veterinarians</a>    
     </td>
     
     <table id="vetsTable" class="table table-striped">
