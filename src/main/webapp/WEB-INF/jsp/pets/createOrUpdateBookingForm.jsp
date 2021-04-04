@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <petclinic:layout pageName="booking">
     <jsp:attribute name="customScript">
@@ -24,16 +25,16 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2><c:if test="${booking['new']}">New </c:if>Booking</h2>
+        <h2><c:if test="${booking['new']}"><fmt:message key="new"/> </c:if><fmt:message key="booking"/></h2>
 
-        <b>Pet</b>
+        <b><fmt:message key="pet"/></b>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Birth Date</th>
-                <th>Type</th>
-                <th>Owner</th>
+                <th><fmt:message key="name"/></th>
+                <th><fmt:message key="birthDate"/></th>
+                <th><fmt:message key="type"/></th>
+                <th><fmt:message key="owner"/></th>
             </tr>
             </thead>
             <tr>
@@ -53,17 +54,17 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="hidden" name="petId" value="${booking.pet.id}"/>
-                    <button class="btn btn-default" type="submit">Add Booking</button>
+                    <button class="btn btn-default" type="submit"><fmt:message key="addBooking"/></button>
                 </div>
             </div>
         </form:form>
 
         <br/>
-        <b>Previous Bookings</b>
+        <b><fmt:message key="previousBookings"/></b>
         <table class="table table-striped">
             <tr>
-                <th>Start Date </th>
-                <th>End Date   </th>
+                <th><fmt:message key="startDate"/> </th>
+                <th><fmt:message key="endDate"/>   </th>
             </tr>
             <c:forEach var="booking" items="${booking.pet.bookings}">
                 <c:if test="${!booking['new']}">
