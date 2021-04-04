@@ -16,18 +16,24 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
+
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.OwnerService;
+import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -45,10 +51,12 @@ public class OwnerController {
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
 	private final OwnerService ownerService;
+	private final PetService petService; //ELIMINAR ESTO
 
 	@Autowired
-	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService) {
+	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService,PetService petService) {
 		this.ownerService = ownerService;
+		this.petService=petService;
 	}
 
 	@InitBinder
@@ -75,6 +83,24 @@ public class OwnerController {
 			return "redirect:/owners/" + owner.getId();
 		}
 	}
+	
+	@GetMapping(value="owners/delete/{ownerId}")
+	public String deleteOwner(@PathVariable("ownerId") int ownerId,ModelMap modelMap) {
+		
+		Owner owner= ownerService.findOwnerById(ownerId);
+		try {
+			ownerService.delete(owner);
+			modelMap.addAttribute("message", "¡Propietario correctamente eliminado!");
+				
+		}catch(DataAccessException exception) {
+				
+				modelMap.addAttribute("message", "El propietario no pudo ser eliminado");
+		}
+			
+		return initFindForm(modelMap);
+	}
+	
+	
 
 	@GetMapping(value = "/owners/find")
 	public String initFindForm(Map<String, Object> model) {

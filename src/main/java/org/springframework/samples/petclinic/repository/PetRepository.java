@@ -31,6 +31,8 @@ import org.springframework.samples.petclinic.model.PetType;
  * @since 15.1.2013
  */
 public interface PetRepository extends Repository<Pet, Integer> {
+	
+	void delete(Pet p) throws DataAccessException;
 
 	/**
 	 * Retrieve all <code>PetType</code>s from the data store.
