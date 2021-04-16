@@ -13,6 +13,11 @@ import javax.validation.constraints.Positive;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "donations")
 public class Donation extends BaseEntity {
@@ -27,10 +32,7 @@ public class Donation extends BaseEntity {
 		@DateTimeFormat(pattern = "yyyy/MM/dd")
 		private Date date;
 
-//		@NotBlank
-//		@ManyToOne
-//		@JoinColumn(name = "causa_id")
-//		private Cause cause;
+
 		
 		@NotBlank
 		@ManyToOne
