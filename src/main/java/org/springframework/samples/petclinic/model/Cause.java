@@ -34,7 +34,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "cause")
+@Table(name = "causes")
 public class Cause extends BaseEntity {
 
 
