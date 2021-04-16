@@ -15,41 +15,34 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import java.util.Collection;
 
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Cause;
-import org.springframework.samples.petclinic.repository.CauseRepository;
+import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Donation;
+import org.springframework.samples.petclinic.repository.DonationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CauseService {
+public class DonationService {
 
 	
-	private final  CauseRepository causeRepository;	
+	private  DonationRepository donationRepository;	
 
 	@Autowired
-	public CauseService(final CauseRepository causeRepository) {
-		this.causeRepository = causeRepository;
+	public DonationService(final DonationRepository donationRepository) {
+		this.donationRepository = donationRepository;
 	}
 
+
 	@Transactional
-	public Iterable<Cause> findAll(){ 
-		 return this.causeRepository.findAll();
-	}
-	
-	@Transactional
-	public Optional<Cause> findById(final int id){
-		return this.causeRepository.findById(id);
+	public void save(Donation donation) {
+		
+		donationRepository.save(donation);
 		
 	}
-	
-	@Transactional
-	public void save(final Cause cause) {
-		this.causeRepository.save(cause);
-	}
-	
 
 }
