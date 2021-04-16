@@ -30,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	DataSource dataSource;
 	
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
@@ -39,6 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
 				.antMatchers("/vets/**").authenticated()
 				.antMatchers("/petHotel/**").authenticated()
+				.antMatchers("/causes/**").authenticated()
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
@@ -56,7 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+	public void configure(final AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication()
 	      .dataSource(this.dataSource)
 	      .usersByUsernameQuery(
@@ -72,7 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {	    
-		PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();
+		final PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();
 	    return encoder;
 	}
 	

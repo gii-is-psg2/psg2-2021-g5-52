@@ -15,11 +15,9 @@
  */
 package org.springframework.samples.petclinic.service;
 
-import java.util.Collection;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Cause;
 import org.springframework.samples.petclinic.repository.CauseRepository;
 import org.springframework.stereotype.Service;
@@ -29,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CauseService {
 
 	
-	private  CauseRepository causeRepository;	
+	private final  CauseRepository causeRepository;	
 
 	@Autowired
 	public CauseService(final CauseRepository causeRepository) {
@@ -38,14 +36,19 @@ public class CauseService {
 
 	@Transactional
 	public Iterable<Cause> findAll(){ 
-		 return causeRepository.findAll();
+		 return this.causeRepository.findAll();
 	}
 	
 	@Transactional
-	public void save(Cause cause) {
+	public void save(final Cause cause) {
 		
-		causeRepository.save(cause);
-		
+		this.causeRepository.save(cause);
 	}
+	
+	@Transactional
+    public Optional<Cause> findById(final int id){
+        return this.causeRepository.findById(id);
+
+    }
 
 }
