@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Adoptions {
+public class Adoptions extends BaseEntity{
 	
 	@OneToOne
 	@JoinColumn(name = "pet_id")
