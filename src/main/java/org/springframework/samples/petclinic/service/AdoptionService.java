@@ -29,6 +29,12 @@ public class AdoptionService {
 	}
 	
 	@Transactional
+	public Optional<Adoption> findById(final int id){
+		return this.adoptionsRepository.findById(id);
+		
+	}
+	
+	@Transactional
 	public Iterable<Adoption> findAll() {
 		return this.adoptionsRepository.findAll();
 	}
