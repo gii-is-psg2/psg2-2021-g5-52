@@ -15,6 +15,7 @@ import org.springframework.samples.petclinic.model.Cause;
 import org.springframework.samples.petclinic.model.Donation;
 import org.springframework.samples.petclinic.service.CauseService;
 import org.springframework.samples.petclinic.service.DonationService;
+import org.springframework.samples.petclinic.service.exceptions.ClosedCauseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -60,14 +61,19 @@ public class DonationController {
 		donation.setCause(cause);
 		
 		if (result.hasErrors()) {
-			System.out.println("ERRORES");
 			System.out.println(result.getAllErrors());
 			model.put("donation", donation);
 			return "donations/createDonationForm";
 			}
 		else {
-			System.out.println("NO HAY ERRORES");
-			this.donationService.newDonation(p, donation);
+			
+			try {
+				this.donationService.newDonation(p, donation);
+				
+			}catch(ClosedCauseException e) {
+				model.put("message", "No puedes donar a una causa que ya ha alcanzado su objetivo");
+			}
+			
 			return causeController.showCausesList(model);
 		}
 	}

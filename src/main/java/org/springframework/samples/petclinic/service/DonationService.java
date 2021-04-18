@@ -25,6 +25,7 @@ import org.springframework.samples.petclinic.model.Cause;
 import org.springframework.samples.petclinic.model.Donation;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.DonationRepository;
+import org.springframework.samples.petclinic.service.exceptions.ClosedCauseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,13 +46,20 @@ public class DonationService {
 	}
 
 	@Transactional
-	public void newDonation(Principal p,Donation donation) {
-		System.out.println("SERVICIO NEW DONATION");
+	public void newDonation(Principal p,Donation donation) throws ClosedCauseException {
+		
+	
+		if(donation.getCause().getBudgetTarget() <= donation.getCause().getSumaDonaciones() ) {
+			
+			throw new ClosedCauseException();
+		}
 		
 		Owner owner= this.ownerService.findOwnerByUsername(p.getName());
 		donation.setOwner(owner);
+		
 		Date fechaActual= new Date();
 		donation.setDate(fechaActual);
+		
 		this.save(donation);
 		
 	}

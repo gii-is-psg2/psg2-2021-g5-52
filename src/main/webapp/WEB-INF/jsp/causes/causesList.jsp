@@ -13,14 +13,14 @@
     </spring:url>
     <a class="btn btn-default" href="${fn:escapeXml(causesUrl)}"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="newCauses"/></a>    
     </td>
-    
+    <br> </br>
     <table id="causesTable" class="table table-striped">
         <thead>
         <tr>
             <th style="width: 150px;"><fmt:message key="name"/></th>
             <th style="width: 200px;"><fmt:message key="budgetAchieved"/></th>
             <th style="width: 120px"><fmt:message key="budgetTarget"/></th>
-            <th style="width: 20px"></th>
+            <th style="width: 20px"> <fmt:message key="seeDetails"/></th>
             <th style="width: 20px"></th>
         </tr>
         </thead>
