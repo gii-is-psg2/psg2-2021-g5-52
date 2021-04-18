@@ -15,13 +15,15 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import java.security.Principal;
 import java.util.Collection;
-
-
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Cause;
 import org.springframework.samples.petclinic.model.Donation;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.DonationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,14 +32,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class DonationService {
 
 	
-	private  DonationRepository donationRepository;	
+	private  DonationRepository donationRepository;
+	private OwnerService ownerService;
+	private CauseService causeService;
 
 	@Autowired
-	public DonationService(final DonationRepository donationRepository) {
+	public DonationService(DonationRepository donationRepository, OwnerService ownerService,CauseService causeService) {
 		this.donationRepository = donationRepository;
+		this.ownerService=ownerService;
+		this.causeService=causeService;
+		
 	}
 
-
+	@Transactional
+	public void newDonation(Principal p,Donation donation) {
+		System.out.println("SERVICIO NEW DONATION");
+		
+		Owner owner= this.ownerService.findOwnerByUsername(p.getName());
+		donation.setOwner(owner);
+		Date fechaActual= new Date();
+		donation.setDate(fechaActual);
+		this.save(donation);
+		
+	}
 	@Transactional
 	public void save(Donation donation) {
 		
