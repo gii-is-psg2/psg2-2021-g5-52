@@ -1,12 +1,18 @@
 package org.springframework.samples.petclinic.web;
 
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Adoption;
-import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.Application;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.AdoptionService;
-import org.springframework.samples.petclinic.service.BookingService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.UserService;
@@ -19,40 +25,56 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class AdoptionController {
-	
+
+	private static String VIEWS_ADOPTION_CREATE_FORM = "adoptions/createAdoptionsForm";
+
 	private final AdoptionService adoptionsService;
 	private final PetService petService;
+	private final OwnerService ownerService;
 
 	@Autowired
-	public AdoptionController(final AdoptionService adoptionsService, final PetService petService) {
+	public AdoptionController(final AdoptionService adoptionsService, final PetService petService, final OwnerService ownerService) {
 		super();
 		this.adoptionsService = adoptionsService;
 		this.petService = petService;
+		this.ownerService = ownerService;
 	}
-	
-	@GetMapping("/pet/{petId}/new")
-    public String addNewAdopcion(@PathVariable("petId") final Integer petId,final ModelMap model) {
-       
-		final Pet pet = this.petService.findPetById(petId);
-		final Adoption adop = new Adoption();
-		adop.setPet(pet);
-		model.addAttribute("adopcion",adop);
-        
-        return "adopcion/createEditAdoptionForm";
-    }
-	
-	
-	@PostMapping("/pet/{petId}/new")
-    public String saveNewAdopcion(@Valid final Adoption adoption, final BindingResult result, final ModelMap model) {
-        if (result.hasErrors()) {
-        	model.addAttribute("adopcion", adoption);
-        	return "adopcion/createEditAdoptionForm";
-        } else {
-        	this.adoptionsService.saveAdoptions(adoption);
-        	final Integer num = adoption.getPet().getOwner().getId();
-        	return "redirect:/owners/"+Integer.toString(num);
-        }
-    }
-	
-	
+
+	@GetMapping(value = { "/adoptions" })
+	public String showAdoptionsList(Map<String, Object> model) {
+		model.put("adoptions", this.adoptionsService.findAll());
+
+		return "adoptions/adoptionsList";
+	}
+
+	@GetMapping(value = { "/adoptions/new" })
+	public String createAdoption(Map<String, Object> model) {
+		Adoption adoption = new Adoption();
+		model.put("adoption", adoption);
+		return AdoptionController.VIEWS_ADOPTION_CREATE_FORM;
+	}
+
+	@PostMapping(value = "/adoptions/new")
+	public String processCreationForm(@Valid Adoption adoption, Principal p, BindingResult result) {
+		if (result.hasErrors()) {
+			return AdoptionController.VIEWS_ADOPTION_CREATE_FORM;
+		} else {
+			Owner owner = ownerService.findOwnerByUsername(p.getName());
+			adoption.setOwner(owner);
+			Collection<Application> solicitudes = new ArrayList<Application>();
+			adoption.setApplications(solicitudes);
+			this.adoptionsService.saveAdoptions(adoption);
+
+			return "redirect:/adoptions/" + adoption.getId();
+		}
+	}
+
+	@GetMapping("/adoptions/{adoptionId}")
+	public String showAdoption(@PathVariable("adoptionId") int adoptionId, Map<String, Object> model) {
+		Adoption adoption = new Adoption();
+		adoption = adoptionsService.getAdoptionsById(adoptionId).get();
+		model.put("adoption", adoption);
+		return "adoptions/adoptionDetails";
+	}
+
 }
