@@ -60,14 +60,15 @@ public class DonationController {
 		donation.setCause(cause);
 		
 		if (result.hasErrors()) {
-		
+			System.out.println("ERRORES");
+			System.out.println(result.getAllErrors());
 			model.put("donation", donation);
 			return "donations/createDonationForm";
 			}
 		else {
-		
+			System.out.println("NO HAY ERRORES");
 			this.donationService.newDonation(p, donation);
-			return "";
+			return causeController.showCausesList(model);
 		}
 	}
 	

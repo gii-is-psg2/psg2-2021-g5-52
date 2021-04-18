@@ -22,8 +22,11 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -42,6 +45,10 @@ public class Cause extends BaseEntity {
 	@Column(name = "name")
 	private String name;
 	
+
+	@OneToOne
+	@JoinColumn(name = "owner_id", referencedColumnName = "id")
+	private Owner owner;
 	
 	@NotBlank
 	@Column(name = "description")
@@ -59,6 +66,15 @@ public class Cause extends BaseEntity {
 	@OneToMany(mappedBy = "cause")
 	@Column(name = "donaciones")
 	private Collection<Donation> donaciones;
+	
+	@Transient
+	public Double getSumaDonaciones() {
+		Double res=0.0;
+		for(final Donation donacion:this.donaciones) {
+			res += donacion.getAmount();
+		}
+		return res;
+	}
 	
 	
 }

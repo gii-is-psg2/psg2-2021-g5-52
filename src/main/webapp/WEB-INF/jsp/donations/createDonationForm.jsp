@@ -7,14 +7,44 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="owners">
-    <h2>
+    
        
-		New donation:
-    </h2>
+	 <h1><fmt:message key="createDonation"/></h1>
+    
+     <h2><fmt:message key="causeInformation"/></h2>
+
+
+    <table class="table table-striped">
+        <tr>
+            <th><fmt:message key="name"/></th>
+            <td><b><c:out value="${donation.cause.name}"/></b></td>
+        </tr>
+        <tr>
+            <th><fmt:message key="ownerRequest"/></th>
+            <td><b><c:out value="${donation.cause.owner.firstName}"/></b></td>
+        </tr>
+        <tr>
+            <th><fmt:message key="description"/></th>
+            <td><c:out value="${donation.cause.description}"/></td>
+        </tr>
+         <tr>
+            <th><fmt:message key="budgetAchieved"/></th>
+            <td><c:out value="${donation.cause.sumaDonaciones}"/></td>
+        </tr>
+        <tr>
+            <th><fmt:message key="budgetTarget"/></th>
+            <td><c:out value="${donation.cause.budgetTarget}"/></td>
+        </tr>
+        <tr>
+            <th><fmt:message key="organization"/></th>
+            <td><c:out value="${donation.cause.organization}"/></td>
+        </tr>
+    </table>
+    
     <form:form modelAttribute="donation" class="form-horizontal" id="add-donation-form" action="/donations/new/${donation.cause.id}" >
    
    
-            <petclinic:inputField label="amount" name="amount"/>        
+            <petclinic:inputField label="cantidad" name="amount"/>        
   
 	
 			<input type="hidden" name="causeId" id="causeId" value="${donation.cause.id}"/>
