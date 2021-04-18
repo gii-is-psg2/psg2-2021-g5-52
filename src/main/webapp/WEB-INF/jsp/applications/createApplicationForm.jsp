@@ -32,7 +32,7 @@
     <form:form modelAttribute="application" class="form-horizontal" id="add-application-form" action="/applications/new/${application.adoption.id}" >
    
    
-            <petclinic:inputFieldInt label="applicationDescription" name="application"/>        
+            <petclinic:inputFieldInt name="application"/>        
   
 	
 			<input type="hidden" name="adoptionId" id="adoptionId" value="${application.adoption.id}"/>
