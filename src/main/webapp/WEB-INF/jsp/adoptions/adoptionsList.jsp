@@ -18,8 +18,7 @@
         <thead>
         <tr>
             <th style="width: 150px;"><fmt:message key="name"/></th>
-            <th style="width: 200px;"><fmt:message key="budgetAchieved"/></th>
-            <th style="width: 120px"><fmt:message key="budgetTarget"/></th>
+            <th style="width: 200px;"><fmt:message key="description"/></th>
             <th style="width: 20px"> <fmt:message key="seeDetails"/></th>
             <th style="width: 20px"></th>
         </tr>

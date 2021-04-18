@@ -15,7 +15,7 @@
             <td><b><c:out value="${adoption.name}"/></b></td>
         </tr>
         <tr>
-            <th><fmt:message key="ownerRequest"/></th>
+            <th><fmt:message key="currentOwner"/></th>
             <td><b><c:out value="${adoption.owner.firstName}"/></b></td>
         </tr>
         <tr>

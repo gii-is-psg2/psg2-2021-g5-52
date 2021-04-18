@@ -16,8 +16,8 @@
     </h2>
     <form:form modelAttribute="adoption" class="form-horizontal" id="add-adoptions-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Name" name="name"/>
-            <petclinic:inputField label="Description" name="description"/>
+            <petclinic:inputFieldInt label="Name" name="name"/>
+            <petclinic:inputFieldInt label="Description" name="description"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
