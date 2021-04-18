@@ -31,7 +31,7 @@ public class CauseService {
 	private final  CauseRepository causeRepository;	
 
 	@Autowired
-	public CauseService(final CauseRepository causeRepository) {
+	public CauseService(CauseRepository causeRepository) {
 		this.causeRepository = causeRepository;
 	}
 
@@ -41,7 +41,7 @@ public class CauseService {
 	}
 	
 	@Transactional
-	public Optional<Cause> findById(final int id){
+	public Optional<Cause> findById(int id){
 		return this.causeRepository.findById(id);
 		
 	}

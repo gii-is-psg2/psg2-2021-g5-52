@@ -1,34 +1,44 @@
 package org.springframework.samples.petclinic.web;
 
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cause;
+import org.springframework.samples.petclinic.model.Donation;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.CauseService;
+import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CauseController {
 
-	private static String VIEWS_CAUSE_CREATE_FORM = "cause/CreateCauseForm";
+	private static String VIEWS_CAUSE_CREATE_FORM = "causes/createCauseForm";
 	
-	private final CauseService causeService;
+	private CauseService causeService;
+	private OwnerService ownerService;
 	
 	@Autowired
-	public CauseController(CauseService causeService) {
+	public CauseController(CauseService causeService, OwnerService ownerService) {
 		this.causeService = causeService;
+		this.ownerService = ownerService;
 	}
+	
 
 	@GetMapping(value = { "/causes" })
 	public String showCausesList(Map<String, Object> model) {
 		model.put("causes", this.causeService.findAll());
+		
 		return "causes/causesList";
 	}
 	
@@ -40,11 +50,15 @@ public class CauseController {
 	}
 	
 	@PostMapping(value = "/causes/new")
-	public String processCreationForm(@Valid Cause cause, BindingResult result) {
+	public String processCreationForm(@Valid Cause cause, Principal p, BindingResult result) {
 		if (result.hasErrors()) {
 			return CauseController.VIEWS_CAUSE_CREATE_FORM;
 		}
 		else {
+			Owner owner = ownerService.findOwnerByUsername(p.getName());
+			cause.setOwner(owner);
+			Collection<Donation> donaciones = new ArrayList<Donation>();
+			cause.setDonaciones(donaciones);
 			this.causeService.save(cause);
 			
 			return "redirect:/causes/" + cause.getId();
@@ -52,10 +66,11 @@ public class CauseController {
 	}
 	
 	@GetMapping("/causes/{causeId}")
-	public ModelAndView showOwner(@PathVariable("causeId") int causeId) {
-		ModelAndView mav = new ModelAndView("causes/causeDetails");
-		mav.addObject(this.causeService.findById(causeId).get());
-		return mav;
+	public String showCause(@PathVariable("causeId") int causeId , Map<String, Object> model) {
+		Cause cause = new Cause();
+		cause = causeService.findById(causeId).get();
+		model.put("cause", cause);
+		return "causes/causeDetails";
 	}
 
 }

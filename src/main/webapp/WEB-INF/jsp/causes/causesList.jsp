@@ -7,34 +7,49 @@
 
 <petclinic:layout pageName="causes">
     <h2><fmt:message key="causes"/></h2>
-
+    
+    <td>	
+   	<spring:url value="/causes/new" var="causesUrl">
+    </spring:url>
+    <a class="btn btn-default" href="${fn:escapeXml(causesUrl)}"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="newCauses"/></a>    
+    </td>
+    
     <table id="causesTable" class="table table-striped">
         <thead>
         <tr>
             <th style="width: 150px;"><fmt:message key="name"/></th>
-            <th style="width: 200px;"><fmt:message key="description"/></th>
+            <th style="width: 200px;"><fmt:message key="budgetAchieved"/></th>
             <th style="width: 120px"><fmt:message key="budgetTarget"/></th>
-            <th style="width: 120px"><fmt:message key="organization"/></th>
+            <th style="width: 20px"></th>
+            <th style="width: 20px"></th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${causes}" var="cause">
             <tr>
                 <td>
-                    <spring:url value="/causes/{causeId}" var="causeUrl">
-                        <spring:param name="causeId" value="${cause.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(causeUrl)}"><c:out value="${cause.name}"/></a>
+                    <c:out value="${cause.name}"/>
                 </td>
                 <td>
-                    <c:out value="${cause.description}"/>
+                    <c:out value="${cause.sumaDonaciones}"/>
                 </td>
                 <td>
                     <c:out value="${cause.budgetTarget}"/>
                 </td>
                 <td>
-                    <c:out value="${cause.organization}"/>
-                </td>                
+                <spring:url value="/causes/{causeId}" var="causeUrl">
+                        <spring:param name="causeId" value="${cause.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(causeUrl)}">
+                    	<span class="glyphicon glyphicon-eye-open"></span></a>
+                </td>         
+                <td>
+                <spring:url value="/donation/new/{causeId}" var="causeUrl">
+                        <spring:param name="causeId" value="${cause.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(causeUrl)}">
+                    	<span class="glyphicon glyphicon-plus"></span></a>
+                </td>             
             </tr>
         </c:forEach>
         </tbody>
