@@ -7,20 +7,22 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="vets">
-    <h2>Veterinarians</h2>
+
+    <h2><fmt:message key="vets"/></h2>
     
-	<td>
+    	<td>
     	<spring:url value="/vets/new" var="vetsUrl">
         </spring:url>
-       	<a class="btn btn-default" href="${fn:escapeXml(vetsUrl)}"><span class="glyphicon glyphicon-plus"></span> New Veterinarians</a>    
+       	<a class="btn btn-default" href="${fn:escapeXml(vetsUrl)}"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="newVeterinarians"/></a>    
     </td>
-    
+
     <table id="vetsTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Specialties</th>
-            <th> Delete </th>
+            <th><fmt:message key="firstName"/></th>
+            <th><fmt:message key="specialties"/></th>
+            <th><fmt:message key="delete"/></th>
+
         </tr>
         </thead>
         <tbody>
@@ -42,7 +44,7 @@
                 <spring:url value="/vets/{vetId}/delete" var="deleteVetUrl">
                        <spring:param name="vetId" value="${vet.id}"/>
                        </spring:url>
-                       <a href="${fn:escapeXml(deleteVetUrl)}">Delete Vet</a>
+                       <a href="${fn:escapeXml(deleteVetUrl)}"><fmt:message key="deleteVet"/></a>
                 </td>
             </tr>
         </c:forEach>
@@ -52,7 +54,7 @@
     <table class="table-buttons">
         <tr>
             <td>
-                <a href="<spring:url value="/vets.xml" htmlEscape="true" />">View as XML</a>
+                <a href="<spring:url value="/vets.xml" htmlEscape="true" />"><fmt:message key="viewasXML"/></a>
             </td>            
         </tr>
     </table>

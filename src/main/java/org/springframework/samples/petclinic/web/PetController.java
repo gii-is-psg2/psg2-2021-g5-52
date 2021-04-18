@@ -167,11 +167,11 @@ public class PetController {
      			
      			System.out.println(pet);
      			petService.deletePetAndVisists(pet);
-     			model.addAttribute("message", "Pet deleted successfully!");
+     			model.addAttribute("message", "¡Mascota correctamente eliminada!");
 
      		}catch(DataAccessException e) {
      			
-    				model.addAttribute("message", "The pet could not be removed");
+    				model.addAttribute("message", "Las mascota no pudo ser eliminada");
      		}
      		return ownerController.initFindForm(model);
      	}

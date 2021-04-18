@@ -90,11 +90,11 @@ public class OwnerController {
 		Owner owner= ownerService.findOwnerById(ownerId);
 		try {
 			ownerService.delete(owner);
-			modelMap.addAttribute("message", "Owner deleted successfully!");
+			modelMap.addAttribute("message", "¡Propietario correctamente eliminado!");
 				
 		}catch(DataAccessException exception) {
 				
-				modelMap.addAttribute("message", "The owner could not be removed");
+				modelMap.addAttribute("message", "El propietario no pudo ser eliminado");
 		}
 			
 		return initFindForm(modelMap);

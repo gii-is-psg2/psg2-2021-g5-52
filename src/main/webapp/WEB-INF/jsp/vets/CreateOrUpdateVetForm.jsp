@@ -6,12 +6,13 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 
 <petclinic:layout pageName="vets">
     <h2>
-        <c:if test="${vet['new']}">New </c:if> Vet
+        <c:if test="${vet['new']}"><fmt:message key="new"/> </c:if> <fmt:message key="vet"/>
     </h2>
     <form:form modelAttribute="vet" class="form-horizontal" id="add-vets-form">
         <div class="form-group has-feedback">
@@ -23,10 +24,10 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${vet['new']}">
-                        <button class="btn btn-default" type="submit">Add Vet</button>
+                        <button class="btn btn-default" type="submit"><fmt:message key="addVet"/></button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Update Vet</button>
+                        <button class="btn btn-default" type="submit"><fmt:message key="updateVet"/></button>
                     </c:otherwise>
                 </c:choose>
             </div>

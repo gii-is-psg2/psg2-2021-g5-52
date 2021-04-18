@@ -155,11 +155,11 @@ public class VetController {
  		Vet vet = this.vetService.findVetById(vetId);
  		try {
  			vetService.delete(vet);
- 			model.addAttribute("message", "Vet deleted successfully!");
+ 			model.addAttribute("message", "¡Veterinario eliminado correctamente!");
 
  		}catch(DataAccessException e) {
  			
-				model.addAttribute("message", "Vet could not be removed");
+				model.addAttribute("message", "Este veterinario no pudo ser eliminado");
  		}
  		return showVetList(model);
 	}
