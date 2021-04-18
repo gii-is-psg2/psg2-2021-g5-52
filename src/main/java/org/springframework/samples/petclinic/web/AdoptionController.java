@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class AdoptionsController {
+public class AdoptionController {
 	
 	private final AdoptionService adoptionsService;
 	private final PetService petService;
 
 	@Autowired
-	public AdoptionsController(final AdoptionService adoptionsService, final PetService petService) {
+	public AdoptionController(final AdoptionService adoptionsService, final PetService petService) {
 		super();
 		this.adoptionsService = adoptionsService;
 		this.petService = petService;
