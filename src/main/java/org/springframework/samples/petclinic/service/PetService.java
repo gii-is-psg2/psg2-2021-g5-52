@@ -81,10 +81,7 @@ public class PetService {
 		
 	}
 	
-	@Transactional
-	public List<Pet> findAllPetsByUsername(final String username) throws DataAccessException {
-		return this.petRepository.findAllPetsFromUsername(username);
-	}
+	
 	
 	@Transactional(readOnly = true)
 	public Pet findPetById(final int id) throws DataAccessException {
@@ -121,5 +118,18 @@ public class PetService {
 		pet.setInAdoption(true);
 		this.petRepository.save(pet);
 	}
+	
+	@Transactional
+	public List<Pet> findPetsForAdoption(){
+		
+		return this.petRepository.findPetsForAdoption();
+	}
+	
+	@Transactional
+	public List<Pet> findPetsNotAdoptionByUsername(String username){
+		
+		return this.petRepository.findPetsNotAdoptionByUsername(username);
+	}
+
 
 }

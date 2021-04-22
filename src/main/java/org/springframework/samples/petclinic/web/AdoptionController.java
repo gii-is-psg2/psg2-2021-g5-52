@@ -33,27 +33,31 @@ public class AdoptionController {
 	}
 
 	@GetMapping(value = { "/adoptions" })
-	public String showAdoptionsList(final Map<String, Object> model) {
-		model.put("adoptions", this.adoptionsService.findAll());
-
-		return "adoptions/adoptionsList";
+	public String showPetsForAdoptionList(final Map<String, Object> model) {
+		List<Pet> petsForAdoption= this.petService.findPetsForAdoption();
+		model.put("pets", petsForAdoption);
+		
+		return "adoptions/petsForAdoption";
 	}
 
 	@GetMapping(value = { "/adoptions/selectPets" })
 	public String selectPets(final Map<String, Object> model, final Principal p) {
-		final List<Pet> pets = this.petService.findAllPetsByUsername(p.getName());
+		final List<Pet> pets = this.petService.findPetsNotAdoptionByUsername(p.getName());
 		model.put("pets", pets);
-		return AdoptionController.VIEWS_ADOPTION_CREATE_FORM;
+		
+		return "/adoptions/selectPets";
 	}
 
-	@GetMapping(value = "/adoptions/new/{petId}")
-	public String createAdoption(final Map<String, Object> model, final Principal p, final BindingResult result, @PathVariable("petId") final int petId) {
+	@GetMapping(value = "/adoptions/pet/{petId}")
+	public String createAdoption(final Map<String, Object> model, final Principal p, @PathVariable("petId")  int petId) {
+		
+		
 		if(this.petService.isOwnerOf(petId, p.getName())) {
 			this.petService.setInAdoption(petId);
 		} else {
 			model.put("message", "No puedes dar en adopcion una mascota que no es tuya");
 		}
-		return this.showAdoptionsList(model);
+		return this.showPetsForAdoptionList(model);
 	}
 
 	@GetMapping("/adoptions/{adoptionId}")

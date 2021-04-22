@@ -55,7 +55,7 @@ public class ApplicationController {
 		else {
 				this.applicationService.newApplication(p, application);
 			
-			return this.adoptionController.showAdoptionsList(model);
+			return this.adoptionController.showPetsForAdoptionList(model);
 		}
 	}
 
