@@ -1,9 +1,12 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Adoption;
+import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.repository.AdoptionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +35,11 @@ public class AdoptionService {
 	public Optional<Adoption> findById(final int id){
 		return this.adoptionsRepository.findById(id);
 		
+	}
+	
+	@Transactional(readOnly = true)	
+	public Set<Pet> findAllPet() throws DataAccessException {
+		return this.adoptionsRepository.findAllPets();
 	}
 	
 	@Transactional

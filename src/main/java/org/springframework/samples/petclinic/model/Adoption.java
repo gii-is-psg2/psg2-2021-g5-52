@@ -38,6 +38,8 @@ public class Adoption extends BaseEntity{
 	@OneToMany(mappedBy = "adoption")
 	@Column(name = "applications")
 	private Collection<Application> applications;
+	
+	
 
 
 }
