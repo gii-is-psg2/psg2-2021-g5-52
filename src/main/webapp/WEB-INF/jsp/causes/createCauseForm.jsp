@@ -10,20 +10,20 @@
 
 
 
-<petclinic:layout pageName="vets">
+<petclinic:layout pageName="causes">
     <h2>
         <fmt:message key="newCause"/>
     </h2>
     <form:form modelAttribute="cause" class="form-horizontal" id="add-causes-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Name" name="name"/>
-            <petclinic:inputField label="Description" name="description"/>
-            <petclinic:inputField name="budgetTarget" label="Budget Target"/>
-            <petclinic:inputField label="Organization" name="organization"/>
+            <petclinic:inputFieldInt  name="name"/>
+            <petclinic:inputFieldInt  name="description"/>
+            <petclinic:inputFieldInt name="budgetTarget"/>
+            <petclinic:inputFieldInt  name="organization"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-default" type="submit"><fmt:message key="addVet"/></button>
+                <button class="btn btn-default" type="submit"><fmt:message key="newCauses"/></button>
             </div>
         </div>
     </form:form>

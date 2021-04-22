@@ -1,10 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
 import java.security.Principal;
-
-
-
-
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -74,7 +71,7 @@ public class DonationController {
 				model.put("message", "No puedes donar a una causa que ya ha alcanzado su objetivo");
 			}
 			
-			return causeController.showCausesList(model);
+			return "welcome";
 		}
 	}
 	
