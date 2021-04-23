@@ -60,6 +60,10 @@ In the retrospective meeting, the team has a discussion about those results.
 | 16/04/2021    | -        |      -          |        :worried:       |    :smiley:            |   :smiley:              |                |
 | 17/04/2021    | -        |      -          |        -       |   -           |   -             |                |
 | 18/04/2021    | -        |      -          |       :smiley:      |    :smiley:          |   -           |                |
-| 22/04/2021    | :smile:         |      -          |       :smiley:      |    :smiley:          |   -           |                |
+| 19/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
+| 20/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
+| 21/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
+| 22/04/2021    | :smile:         |      -          |       :smiley:      |    :smiley:          |   :smiley:          |                |
+| 23/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
 
 ...
