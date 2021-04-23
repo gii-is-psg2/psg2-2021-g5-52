@@ -41,7 +41,7 @@
 	         <c:out value="${pet.type.name}"/>
 	         </td>
 	         <td>
-	         <spring:url value="/applications/createApplicationForm" var="applicationsUrl">
+	         <spring:url value="/applications/createApplicationForm/{petId}" var="applicationsUrl">
 	               <spring:param name="petId" value="${pet.id}"/>
 	         </spring:url>
 	         <a href="${fn:escapeXml(applicationsUrl)}"><fmt:message key="adopt"/></a>

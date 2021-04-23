@@ -19,20 +19,27 @@
  		
         </tr>
         <tr>
-	         <c:forEach var="pet" items="${pets}">
-	         
 	         <td>
-	         <c:out value="${pet.name}"/>
+	         <c:out value="${application.pet.name}"/>
 	         </td>
 	          <td>
-	         <petclinic:localDate date="${pet.birthDate}" pattern="yyyy-MM-dd"/>
+	         <petclinic:localDate date="${application.pet.birthDate}" pattern="yyyy-MM-dd"/>
 	         </td>
 	         <td>
-	         <c:out value="${pet.type.name}"/>
+	         <c:out value="${application.pet.type.name}"/>
 	         </td>
          </tr>
-         </c:forEach>
      </table>
+     <form:form modelAttribute="application" class="form-horizontal" id="add-adoptions-form">
+        <div class="form-group has-feedback">
+            <petclinic:inputFieldInt name="description"/>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-default" type="submit"><fmt:message key="applyForAdoption"/></button>
+            </div>
+        </div>
+    </form:form>
      
      
 

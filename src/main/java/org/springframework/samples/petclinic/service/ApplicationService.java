@@ -1,12 +1,16 @@
 package org.springframework.samples.petclinic.service;
 
 import java.security.Principal;
+import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Application;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.ApplicationRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +19,11 @@ public class ApplicationService {
 
 	private final ApplicationRepository applicationRepository;
 	private final OwnerService ownerService;
-	private final AdoptionService adoptionService;
 
 	@Autowired
-	public ApplicationService(final ApplicationRepository applicationRepository, final OwnerService ownerService, final AdoptionService adoptionService) {
+	public ApplicationService(final ApplicationRepository applicationRepository, final OwnerService ownerService) {
 		this.applicationRepository = applicationRepository;
 		this.ownerService=ownerService;
-		this.adoptionService=adoptionService;
 		
 	}
 
@@ -40,4 +42,16 @@ public class ApplicationService {
 		this.applicationRepository.save(application);
 		
 	}
+	
+	@Transactional	
+	public Iterable<Application> findAll() throws DataAccessException {
+		return applicationRepository.findAll();
+	}	
+	
+	@Transactional
+	public List<Application> findNotClosed() throws DataAccessException{
+		return applicationRepository.findNotClosed();
+	}
+	
+	
 }

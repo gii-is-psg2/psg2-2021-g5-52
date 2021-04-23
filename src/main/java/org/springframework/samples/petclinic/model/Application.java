@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -20,9 +21,9 @@ public class Application  extends BaseEntity{
 	@Column(name = "description")
 	private String description;
 	
-	@ManyToOne
-	@JoinColumn(name = "adoption_id")
-	private Adoption adoption;
+	@OneToOne
+	@JoinColumn(name = "pet_id")
+	private Pet pet;
 	
 	
 	@ManyToOne

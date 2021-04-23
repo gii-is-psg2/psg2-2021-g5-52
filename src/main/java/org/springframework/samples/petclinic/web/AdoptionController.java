@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Adoption;
+import org.springframework.samples.petclinic.model.Application;
 import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.service.AdoptionService;
+import org.springframework.samples.petclinic.service.ApplicationService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.stereotype.Controller;
@@ -20,14 +20,14 @@ public class AdoptionController {
 
 	private static String VIEWS_ADOPTION_CREATE_FORM = "adoptions/createAdoptionsForm";
 
-	private final AdoptionService adoptionsService;
+	private final ApplicationService applicationService;
 	private final PetService petService;
 	private final OwnerService ownerService;
 
 	@Autowired
-	public AdoptionController(final AdoptionService adoptionsService, final PetService petService, final OwnerService ownerService) {
+	public AdoptionController(final ApplicationService applicationService, final PetService petService, final OwnerService ownerService) {
 		super();
-		this.adoptionsService = adoptionsService;
+		this.applicationService = applicationService;
 		this.petService = petService;
 		this.ownerService = ownerService;
 	}
@@ -62,8 +62,8 @@ public class AdoptionController {
 
 	@GetMapping("/adoptions/{adoptionId}")
 	public String showAdoption(@PathVariable("adoptionId") final int adoptionId, final Map<String, Object> model) {
-		Adoption adoption = new Adoption();
-		adoption = this.adoptionsService.getAdoptionsById(adoptionId).get();
+		Application adoption = new Application();
+//		adoption = this.applicationService.getAdoptionsById(adoptionId).get();
 		model.put("adoption", adoption);
 		return "adoptions/adoptionDetails";
 	}
