@@ -9,36 +9,31 @@
 <petclinic:layout pageName="owners">
     
        
-	 <h1><fmt:message key="createApplication"/></h1>
-    
-     <h2><fmt:message key="description"/></h2>
-
-
-    <table class="table table-striped">
-        <tr>
+	<h2><fmt:message key="createApplication"/></h2>
+	 <table class="table table-striped">
+         <tr>
+          
             <th><fmt:message key="name"/></th>
-            <td><b><c:out value="${application.adoption.name}"/></b></td>
+            <th><fmt:message key="birthDate"/></th>
+            <th><fmt:message key="type"/></th>
+ 		
         </tr>
         <tr>
-            <th><fmt:message key="currentOwner"/></th>
-            <td><b><c:out value="${application.adoption.owner.firstName}"/></b></td>
-        </tr>
-        <tr>
-            <th><fmt:message key="description"/></th>
-            <td><c:out value="${application.adoption.description}"/></td>
-        </tr>
-    </table>
-    
-    <form:form modelAttribute="application" class="form-horizontal" id="add-application-form" action="/applications/new/${application.adoption.id}" >
-   
-   
-            <petclinic:inputFieldInt name="application"/>        
-  
-	
-			<input type="hidden" name="adoptionId" id="adoptionId" value="${application.adoption.id}"/>
-         
-             <button class="btn btn-default" type="submit"><fmt:message key="createApplication"/></button>
-	
+	         <c:forEach var="pet" items="${pets}">
 	         
-    </form:form>
+	         <td>
+	         <c:out value="${pet.name}"/>
+	         </td>
+	          <td>
+	         <petclinic:localDate date="${pet.birthDate}" pattern="yyyy-MM-dd"/>
+	         </td>
+	         <td>
+	         <c:out value="${pet.type.name}"/>
+	         </td>
+         </tr>
+         </c:forEach>
+     </table>
+     
+     
+
 </petclinic:layout>
