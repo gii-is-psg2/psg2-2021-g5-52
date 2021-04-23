@@ -48,6 +48,7 @@ In the retrospective meeting, the team has a discussion about those results.
 | Day           | alvcorcas  |
 | ------------- | ------------- |
 | 14/04/2021    |    :smiley: (Meaning that work was completed without any issues) |
+| 22/04/2021    |    :smile: (Meaning that there is interest in the project) |
 
 
 ## Sprint Template
@@ -59,5 +60,6 @@ In the retrospective meeting, the team has a discussion about those results.
 | 16/04/2021    | -        |      -          |        :worried:       |    :smiley:            |   :smiley:              |                |
 | 17/04/2021    | -        |      -          |        -       |   -           |   -             |                |
 | 18/04/2021    | -        |      -          |       :smiley:      |    :smiley:          |   -           |                |
+| 22/04/2021    | :smile:         |      -          |       :smiley:      |    :smiley:          |   -           |                |
 
 ...
