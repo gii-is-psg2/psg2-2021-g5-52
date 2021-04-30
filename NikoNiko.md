@@ -67,14 +67,14 @@ In the retrospective meeting, the team has a discussion about those results.
 | 20/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
 | 21/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
 | 22/04/2021    | :smile:         |      :smiley:         |       :smiley:      |    :smiley:          |   :smiley:          |     :smiley:           |
-| 23/04/2021    | -        |      :smiley:          |       -    |   -         |   :smiley:          |       -         |
+| 23/04/2021    | -        |      :smiley:          |       -    |   :smiley:         |   :smiley:          |       -         |
 | 24/04/2021    | -        |      -          |      -     |   -         |   -           |       -         |
 | 25/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
 | 26/04/2021    | -        |      -          |       :fearful:    |   -         |   -           |       -         |
 | 27/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
 | 28/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
 | 29/04/2021    | :smile:      |      -          |       -    |   -         |   -           |       -         |
-| 30/04/2021    | :smiley:     |      -          |       :neutral_face:    |   -         |   :smiley:           |      :smiley:      |
+| 30/04/2021    | :smiley:     |      -          |       :neutral_face:    |   :neutral_face:         |   :smiley:           |      :smiley:      |
 
 
 
