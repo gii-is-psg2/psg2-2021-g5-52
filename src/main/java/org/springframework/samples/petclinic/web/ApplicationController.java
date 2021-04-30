@@ -1,9 +1,9 @@
 package org.springframework.samples.petclinic.web;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-
 @Controller
 public class ApplicationController {
 	
@@ -29,6 +27,7 @@ public class ApplicationController {
 	private final AdoptionController adoptionController;
 	private final UserService userService;
 	
+	String message = "message";
 	
 	@Autowired
 	public ApplicationController(final ApplicationService applicationService,final AdoptionController adoptionController, final PetService petService,UserService userService) {
@@ -41,7 +40,7 @@ public class ApplicationController {
 	@GetMapping(value = { "/applications/createApplicationForm/{petId}" })
 	public String createApplication(final Map<String, Object> model, @PathVariable("petId") final Integer idpet) {
 		final Application application = new Application();
-		application.setPet(petService.findPetById(idpet));
+		application.setPet(this.petService.findPetById(idpet));
 		model.put("application", application);
 		return "applications/createApplicationForm";
 	}
@@ -55,8 +54,8 @@ public class ApplicationController {
 	
 	@PostMapping(value = "/applications/createApplicationForm/{petId}")
 	public String processCreationForm(@Valid final Application application,final BindingResult result,@PathVariable("petId") final Integer idpet,final Principal p,final Map<String, Object> model) {
-		Pet pet = petService.findPetById(idpet);
-		application.setPet(petService.findPetById(idpet));
+		Pet pet = this.petService.findPetById(idpet);
+		application.setPet(this.petService.findPetById(idpet));
 		
 		if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());
@@ -64,13 +63,13 @@ public class ApplicationController {
 			return "applications/createApplicationForm";
 			}
 		else {
-			if(!userService.userHaveRol(p.getName(), "owner")){
-				model.put("message", "No puedes adoptar una mascota si no tienes un rol de propietario");
+			if(!this.userService.userHaveRol(p.getName(), "owner")){
+				model.put(this.message, "No puedes adoptar una mascota si no tienes un rol de propietario");
 
-			}else if(!petService.isOwnerOf(idpet, p.getName()) && pet.isInAdoption()) {
-				applicationService.newApplication(p, application);
+			}else if(!this.petService.isOwnerOf(idpet, p.getName()) && pet.isInAdoption()) {
+				this.applicationService.newApplication(p, application);
 			}else{
-				model.put("message", "No puedes adoptar una mascota propia o que no este en adopcion");
+				model.put(this.message, "No puedes adoptar una mascota propia o que no este en adopcion");
 			}
 			
 			return this.adoptionController.showPetsForAdoptionList(model, p);
@@ -80,19 +79,19 @@ public class ApplicationController {
 	@GetMapping(value = { "/applications/reject/{applicationId}" })
 	public String rejectApplication(final Map<String, Object> model, @PathVariable("applicationId") final Integer applicationId,Principal p) {
 		
-		Optional<Application> application= applicationService.findById(applicationId);
+		Optional<Application> application= this.applicationService.findById(applicationId);
 		if(application.isPresent()) {
 			
-			if(applicationService.isApplicationToMe(p.getName(),application.get())) {
-				applicationService.rejectApplication(application.get());
-				model.put("message","Solicitud rechazada correctamente");
+			if(this.applicationService.isApplicationToMe(p.getName(),application.get())) {
+				this.applicationService.rejectApplication(application.get());
+				model.put(this.message,"Solicitud rechazada correctamente");
 
 			}else {
-				model.put("message","No puedes rechazar una petición que no va dirigida a ti");
+				model.put(this.message,"No puedes rechazar una petición que no va dirigida a ti");
 			}
 			
 		}else {
-			model.put("message", "No puedes rechazar una petición que no existe");
+			model.put(this.message, "No puedes rechazar una petición que no existe");
 			
 		}	
 		return this.listOfApplications(model, p);
@@ -100,21 +99,21 @@ public class ApplicationController {
 	@GetMapping(value = { "/applications/acept/{applicationId}" })
 	public String aceptApplication(final Map<String, Object> model, @PathVariable("applicationId") final Integer applicationId,Principal p) {
 		
-		Optional<Application> application= applicationService.findById(applicationId);
+		Optional<Application> application= this.applicationService.findById(applicationId);
 		
 		if(application.isPresent()) {
 			
-			if(applicationService.isApplicationToMe(p.getName(),application.get())) {
-				applicationService.aceptApplication(application.get());
+			if(this.applicationService.isApplicationToMe(p.getName(),application.get())) {
+				this.applicationService.aceptApplication(application.get());
 				
-				model.put("message","Solicitud aceptada correctamente");
+				model.put(this.message,"Solicitud aceptada correctamente");
 
 			}else {
-				model.put("message","No puedes aceptar una petición que no va dirigida a ti");
+				model.put(this.message,"No puedes aceptar una petición que no va dirigida a ti");
 			}
 			
 		}else {
-			model.put("message", "No puedes aceptar una petición que no existe");
+			model.put(this.message, "No puedes aceptar una petición que no existe");
 			
 		}
 		return this.listOfApplications(model, p);

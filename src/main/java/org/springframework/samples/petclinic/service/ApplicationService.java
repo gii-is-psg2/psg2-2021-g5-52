@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
 import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +11,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Application;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.ApplicationRepository;
 import org.springframework.stereotype.Service;
 
@@ -48,13 +46,13 @@ public class ApplicationService {
 	
 	@Transactional	
 	public Iterable<Application> findAll() throws DataAccessException {
-		return applicationRepository.findAll();
+		return this.applicationRepository.findAll();
 	}	
 	
 	@Transactional
 	public List<Application> findApplicationsToMeNotClosed(String username) throws DataAccessException{
 		
-		return applicationRepository.findAplicationsToMeNotClosed(username);
+		return this.applicationRepository.findAplicationsToMeNotClosed(username);
 	
 	}
 	
@@ -69,13 +67,13 @@ public class ApplicationService {
 	
 	@Transactional
 	public Optional<Application> findById(int id) {
-		return applicationRepository.findById(id);
+		return this.applicationRepository.findById(id);
 	}
 	
 	@Transactional
 	public void rejectApplication(Application app) {
 		app.setClosed(true);
-		applicationRepository.save(app);
+		this.applicationRepository.save(app);
 	}
 	
 	@Transactional
@@ -83,11 +81,11 @@ public class ApplicationService {
 		Pet pet= app.getPet();
 		pet.setOwner(app.getOwner());
 		try {
-			petService.savePet(pet);
+			this.petService.savePet(pet);
 		}catch(Exception e) {
 			
 		}
 		app.setClosed(true);
-		applicationRepository.save(app);
+		this.applicationRepository.save(app);
 	}
 }

@@ -15,8 +15,6 @@
  */
 package org.springframework.samples.petclinic.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.logging.Level;
@@ -77,8 +75,8 @@ class PetServiceTests {
 	@Test
 	void shouldFindPetWithCorrectId() {
 		Pet pet7 = this.petService.findPetById(7);
-		assertThat(pet7.getName()).startsWith("Samantha");
-		assertThat(pet7.getOwner().getFirstName()).isEqualTo("Jean");
+		org.assertj.core.api.Assertions.assertThat(pet7.getName()).startsWith("Samantha");
+		org.assertj.core.api.Assertions.assertThat(pet7.getOwner().getFirstName()).isEqualTo("Jean");
 
 	}
 
@@ -87,9 +85,9 @@ class PetServiceTests {
 		Collection<PetType> petTypes = this.petService.findPetTypes();
 
 		PetType petType1 = EntityUtils.getById(petTypes, PetType.class, 1);
-		assertThat(petType1.getName()).isEqualTo("cat");
+		org.assertj.core.api.Assertions.assertThat(petType1.getName()).isEqualTo("cat");
 		PetType petType4 = EntityUtils.getById(petTypes, PetType.class, 4);
-		assertThat(petType4.getName()).isEqualTo("snake");
+		org.assertj.core.api.Assertions.assertThat(petType4.getName()).isEqualTo("snake");
 	}
 
 	@Test
@@ -104,7 +102,7 @@ class PetServiceTests {
 		pet.setType(EntityUtils.getById(types, PetType.class, 2));
 		pet.setBirthDate(LocalDate.now());
 		owner6.addPet(pet);
-		assertThat(owner6.getPets().size()).isEqualTo(found + 1);
+		org.assertj.core.api.Assertions.assertThat(owner6.getPets().size()).isEqualTo(found + 1);
 
             try {
                 this.petService.savePet(pet);
@@ -114,9 +112,9 @@ class PetServiceTests {
 		this.ownerService.saveOwner(owner6);
 
 		owner6 = this.ownerService.findOwnerById(6);
-		assertThat(owner6.getPets().size()).isEqualTo(found + 1);
+		org.assertj.core.api.Assertions.assertThat(owner6.getPets().size()).isEqualTo(found + 1);
 		// checks that id has been generated
-		assertThat(pet.getId()).isNotNull();
+		org.assertj.core.api.Assertions.assertThat(pet.getId()).isNotNull();
 	}
 	
 	@Test
@@ -130,7 +128,7 @@ class PetServiceTests {
 		pet.setBirthDate(LocalDate.now());
 		owner6.addPet(pet);
 		try {
-			petService.savePet(pet);		
+			this.petService.savePet(pet);		
 		} catch (DuplicatedPetNameException e) {
 			// The pet already exists!
 			e.printStackTrace();
@@ -142,7 +140,7 @@ class PetServiceTests {
 		anotherPetWithTheSameName.setBirthDate(LocalDate.now().minusWeeks(2));
 		Assertions.assertThrows(DuplicatedPetNameException.class, () ->{
 			owner6.addPet(anotherPetWithTheSameName);
-			petService.savePet(anotherPetWithTheSameName);
+			this.petService.savePet(anotherPetWithTheSameName);
 		});		
 	}
 
@@ -157,7 +155,7 @@ class PetServiceTests {
 		this.petService.savePet(pet7);
 
 		pet7 = this.petService.findPetById(7);
-		assertThat(pet7.getName()).isEqualTo(newName);
+		org.assertj.core.api.Assertions.assertThat(pet7.getName()).isEqualTo(newName);
 	}
 	
 	@Test
@@ -178,8 +176,8 @@ class PetServiceTests {
 		owner6.addPet(anotherPet);
 		
 		try {
-			petService.savePet(pet);
-			petService.savePet(anotherPet);
+			this.petService.savePet(pet);
+			this.petService.savePet(anotherPet);
 		} catch (DuplicatedPetNameException e) {
 			// The pets already exists!
 			e.printStackTrace();
@@ -187,7 +185,7 @@ class PetServiceTests {
 			
 		Assertions.assertThrows(DuplicatedPetNameException.class, () ->{
 			anotherPet.setName("wario");
-			petService.savePet(anotherPet);
+			this.petService.savePet(anotherPet);
 		});		
 	}
 
@@ -207,18 +205,18 @@ class PetServiceTests {
             }
 
 		pet7 = this.petService.findPetById(7);
-		assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
-		assertThat(visit.getId()).isNotNull();
+		org.assertj.core.api.Assertions.assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
+		org.assertj.core.api.Assertions.assertThat(visit.getId()).isNotNull();
 	}
 
 	@Test
 	void shouldFindVisitsByPetId() throws Exception {
 		Collection<Visit> visits = this.petService.findVisitsByPetId(7);
-		assertThat(visits.size()).isEqualTo(2);
+		org.assertj.core.api.Assertions.assertThat(visits.size()).isEqualTo(2);
 		Visit[] visitArr = visits.toArray(new Visit[visits.size()]);
-		assertThat(visitArr[0].getPet()).isNotNull();
-		assertThat(visitArr[0].getDate()).isNotNull();
-		assertThat(visitArr[0].getPet().getId()).isEqualTo(7);
+		org.assertj.core.api.Assertions.assertThat(visitArr[0].getPet()).isNotNull();
+		org.assertj.core.api.Assertions.assertThat(visitArr[0].getDate()).isNotNull();
+		org.assertj.core.api.Assertions.assertThat(visitArr[0].getPet().getId()).isEqualTo(7);
 	}
 
 }

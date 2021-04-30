@@ -74,7 +74,7 @@ public class Owner extends Person {
 	}
 
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
 	public void setUser(User user) {
@@ -113,18 +113,18 @@ public class Owner extends Person {
 	}
 
 	public List<Pet> getPets() {
-		List<Pet> sortedPets = new ArrayList<>(getPetsInternal());
+		List<Pet> sortedPets = new ArrayList<>(this.getPetsInternal());
 		PropertyComparator.sort(sortedPets, new MutableSortDefinition("name", true, true));
 		return Collections.unmodifiableList(sortedPets);
 	}
 
 	public void addPet(Pet pet) {
-		getPetsInternal().add(pet);
+		this.getPetsInternal().add(pet);
 		pet.setOwner(this);
 	}
 	
 	public boolean removePet(Pet pet) {
-		return getPetsInternal().remove(pet);
+		return this.getPetsInternal().remove(pet);
 	}
 
 	/**
@@ -133,15 +133,15 @@ public class Owner extends Person {
 	 * @return true if pet name is already in use
 	 */
 	public Pet getPet(String name) {
-		return getPet(name, false);
+		return this.getPet(name, false);
 	}
 	
 	public Pet getPetwithIdDifferent(String name,Integer id) {
 		name = name.toLowerCase();
-		for (Pet pet : getPetsInternal()) {
+		for (Pet pet : this.getPetsInternal()) {
 			String compName = pet.getName();
 			compName = compName.toLowerCase();
-			if (compName.equals(name) && pet.getId()!=id) {
+			if (compName.equals(name) && !pet.getId().equals(id)) {
 				return pet;
 			}
 		}
@@ -155,7 +155,7 @@ public class Owner extends Person {
 	 */
 	public Pet getPet(String name, boolean ignoreNew) {
 		name = name.toLowerCase();
-		for (Pet pet : getPetsInternal()) {
+		for (Pet pet : this.getPetsInternal()) {
 			if (!ignoreNew || !pet.isNew()) {
 				String compName = pet.getName();
 				compName = compName.toLowerCase();

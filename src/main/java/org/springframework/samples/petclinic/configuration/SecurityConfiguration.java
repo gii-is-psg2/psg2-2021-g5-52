@@ -29,18 +29,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	DataSource dataSource;
 	
+	String admin = "admin";
+	String owner = "owner";
+	
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
 				.antMatchers("/users/new").permitAll()
-				.antMatchers("/admin/**").hasAnyAuthority("admin")
-				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
+				.antMatchers("/admin/**").hasAnyAuthority(this.admin)
+				.antMatchers("/owners/**").hasAnyAuthority(this.owner,this.admin)				
 				.antMatchers("/vets/**").authenticated()
 				.antMatchers("/petHotel/**").authenticated()
-				.antMatchers("/adoptions/**").hasAnyAuthority("owner", "admin")
-				.antMatchers("/applications/**").hasAnyAuthority("owner", "admin")
+				.antMatchers("/adoptions/**").hasAnyAuthority(this.owner, this.admin)
+				.antMatchers("/applications/**").hasAnyAuthority(this.owner, this.admin)
 				.antMatchers("/causes/**").authenticated()
 				.antMatchers("/donations/**").authenticated()
 				.anyRequest().denyAll()
@@ -75,9 +78,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public PasswordEncoder passwordEncoder() {	    
-		final PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();
-	    return encoder;
+	public PasswordEncoder passwordEncoder() {
+	    return NoOpPasswordEncoder.getInstance();
 	}
 	
 }

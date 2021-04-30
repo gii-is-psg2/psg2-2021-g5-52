@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.web;
 
 import java.security.Principal;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -35,33 +36,42 @@ public class DonationController {
 	@GetMapping(value = { "/donations/new/{causeId}" })
 	public String createCauses(Map<String, Object> model, @PathVariable("causeId") Integer idCause) {
 		Donation donation= new Donation();
-		Cause cause= this.causeService.findById(idCause).get();
-		donation.setCause(cause);
-		model.put("donation", donation);
-		return "donations/createDonationForm";
+		Optional<Cause> optCause = this.causeService.findById(idCause);
+		if(optCause.isPresent()) {
+			donation.setCause(optCause.get());
+			model.put("donation", donation);
+			return "donations/createDonationForm";
+		}else {
+			model.put("message", "No se ha encontrado la Causa");
+			return "/donations/new/" + idCause;
+		}
 	}
 	
 	@PostMapping(value = "/donations/new/{causeId}")
 	public String processCreationForm(@Valid Donation donation,BindingResult result,@PathVariable("causeId") Integer idCause,Principal p,Map<String, Object> model) {
-
-		Cause cause= this.causeService.findById(idCause).get();
-		donation.setCause(cause);
-		
-		if (result.hasErrors()) {
-			System.out.println(result.getAllErrors());
-			model.put("donation", donation);
-			return "donations/createDonationForm";
-			}
-		else {
+		Optional<Cause> optCause = this.causeService.findById(idCause);
+		if(optCause.isPresent()) {
+			donation.setCause(optCause.get());
 			
-			try {
-				this.donationService.newDonation(p, donation);
+			if (result.hasErrors()) {
+				System.out.println(result.getAllErrors());
+				model.put("donation", donation);
+				return "donations/createDonationForm";
+				}
+			else {
 				
-			}catch(ClosedCauseException e) {
-				model.put("message", "No puedes donar a una causa que ya ha alcanzado su objetivo");
+				try {
+					this.donationService.newDonation(p, donation);
+					
+				}catch(ClosedCauseException e) {
+					model.put("message", "No puedes donar a una causa que ya ha alcanzado su objetivo");
+				}
+				
+				return "welcome";
 			}
-			
-			return "welcome";
+		}else {
+			model.put("message", "No se ha encontrado la Causa");
+			return "/donations/new/" + idCause;
 		}
 	}
 	
