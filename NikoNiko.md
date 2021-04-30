@@ -55,6 +55,7 @@ In the retrospective meeting, the team has a discussion about those results.
 
 | Day           | alvcorcas    | josgrarom  | antsuagar     | elenolcar     | vicdiacor    | alemorgar4     |
 | ------------- | ------------- | -------------  | -------------  | -------------  | -------------  | -------------  |
+| 09/04/2021    | :smiley:        |      :smiley:          |       :smiley:          |      :smiley:       |      :smiley:         |      -          |
 | 14/04/2021    | :smiley:        |      :smiley:          |      -          |       -         |      -          |      -          |
 | 15/04/2021    | -        |      -          |      -          |                |           -     |       -        |
 | 16/04/2021    | -        |      -          |        :worried:       |    :smiley:            |   :smiley:              |        :smiley:         |
