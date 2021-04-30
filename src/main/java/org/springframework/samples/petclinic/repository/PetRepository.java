@@ -32,7 +32,16 @@ import org.springframework.samples.petclinic.model.PetType;
  */
 public interface PetRepository extends Repository<Pet, Integer> {
 	
+	@Query("SELECT p FROM Pet p where p.owner.user.username = ?1 and p.inAdoption = false")
+	List<Pet> findPetsNotAdoptionByUsername(String username) throws DataAccessException; 
+	
 	void delete(Pet p) throws DataAccessException;
+	
+	
+	@Query("SELECT p FROM Pet p where p.inAdoption = true AND p.owner.user.username != ?1")
+	List<Pet> findPetsForAdoption(String username) throws DataAccessException;
+	
+	
 
 	/**
 	 * Retrieve all <code>PetType</code>s from the data store.

@@ -17,9 +17,11 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +50,22 @@ public class UserService {
 		user.setEnabled(true);
 		this.userRepository.save(user);
 	}
-
+	
+	@Transactional
+	public boolean userHaveRol(String username, String rol) {
+		boolean res= false;
+		Optional<User> user=this.findUser(username);
+		if(user.isPresent()) {
+			Set<Authorities> roles= user.get().getAuthorities();
+			for (Authorities a:roles) {
+				if(a.getAuthority().equals(rol)) {
+					res=true;
+					break;
+				}
+			}
+		}
+		return res;
+	}
 	public Optional<User> findUser(final String username) {
 		return this.userRepository.findById(username);
 	}
