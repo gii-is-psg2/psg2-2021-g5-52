@@ -49,6 +49,8 @@ In the retrospective meeting, the team has a discussion about those results.
 | ------------- | ------------- |
 | 14/04/2021    |    :smiley: (Meaning that work was completed without any issues) |
 | 22/04/2021    |    :smile: (Meaning that there is interest in the project) |
+| 29/04/2021    |    :smile: (Meaning that there is interest in the project) |
+| 30/04/2021    |    :smiley: (Meaning that the sprint is going to be completed succesfully) |
 
 
 ## Sprint Template
@@ -71,8 +73,8 @@ In the retrospective meeting, the team has a discussion about those results.
 | 26/04/2021    | -        |      -          |       :fearful:    |   -         |   -           |       -         |
 | 27/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
 | 28/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
-| 29/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
-| 30/04/2021    | -        |      -          |       -    |   -         |   :smiley:           |       -         |
+| 29/04/2021    | :smile:      |      -          |       -    |   -         |   -           |       -         |
+| 30/04/2021    | :smiley:     |      -          |       -    |   -         |   :smiley:           |       -         |
 
 
 
