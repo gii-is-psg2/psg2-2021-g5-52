@@ -136,17 +136,17 @@ public class Owner extends Person {
 		return this.getPet(name, false);
 	}
 	
-	public Pet getPetwithIdDifferent(String name,Integer id) {
-		name = name.toLowerCase();
-		for (Pet pet : this.getPetsInternal()) {
-			String compName = pet.getName();
-			compName = compName.toLowerCase();
-			if (compName.equals(name) && !pet.getId().equals(id)) {
-				return pet;
-			}
-		}
-		return null;
-	}
+	public Pet getPetwithIdDifferent(String name,final Integer id) {
+        name = name.toLowerCase();
+        for (final Pet pet : this.getPetsInternal()) {
+            final String compName = pet.getName().toLowerCase();
+            final Integer petId = pet.getId();
+            if (compName.equals(name) && petId != null && !petId.equals(id)) {
+                return pet;
+            }
+        }
+        return null;
+    }
 
 	/**
 	 * Return the Pet with the given name, or null if none found for this Owner.
