@@ -31,7 +31,7 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2><c:if test="${booking['new']}"><fmt:message key="new"/> </c:if><fmt:message key="booking"/></h2>
+        <h2><fmt:message key="booking"/></h2>
 
         <b><fmt:message key="pet"/></b>
         <table class="table table-striped">

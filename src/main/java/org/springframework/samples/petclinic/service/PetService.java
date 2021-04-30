@@ -21,13 +21,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Booking;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.samples.petclinic.repository.VisitRepository;
-import org.springframework.samples.petclinic.service.exceptions.BookingSavingException;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +41,6 @@ import org.springframework.util.StringUtils;
 public class PetService {
 
 	private final PetRepository		petRepository;
-	private final BookingService	bookingService;
 	private final VisitService visitService;
 
 
@@ -51,7 +48,6 @@ public class PetService {
 	public PetService(final PetRepository petRepository, final VisitRepository visitRepository, final BookingService bookingService, final VisitService visitService) {
 		this.petRepository = petRepository;
 		this.visitService=visitService;
-		this.bookingService=bookingService;
 
 	}
 
@@ -89,25 +85,18 @@ public class PetService {
 	}
 
 	@Transactional(rollbackFor = DuplicatedPetNameException.class)
-	public void savePet(final Pet pet) throws DataAccessException, DuplicatedPetNameException {
-		final Pet otherPet = pet.getOwner().getPetwithIdDifferent(pet.getName(), pet.getId());
-		if (StringUtils.hasLength(pet.getName()) && (otherPet != null && otherPet.getId() != pet.getId())) {
-			throw new DuplicatedPetNameException();
-		} else
-			this.petRepository.save(pet);
-	}
+    public void savePet(final Pet pet) throws DataAccessException, DuplicatedPetNameException {
+        final Integer id = pet.getId();
+        final Pet otherPet = pet.getOwner().getPetwithIdDifferent(pet.getName(), id);
+        if (StringUtils.hasLength(pet.getName()) && 
+            (otherPet != null && !otherPet.getId().equals(id))) {
+            throw new DuplicatedPetNameException();
+        } else
+            this.petRepository.save(pet);
+    }
 
 	public Collection<Visit> findVisitsByPetId(final int petId) {
 		return this.visitService.findByPetId(petId);
-	}
-
-	@Transactional
-	public void saveBooking(final Booking booking) throws BookingSavingException {
-		try {
-			this.bookingService.saveBooking(booking);
-		} catch (Exception e) {
-			
-		}
 	}
 	
 	@Transactional
@@ -124,13 +113,13 @@ public class PetService {
 	}
 	
 	@Transactional
-	public List<Pet> findPetsForAdoption(String username){
+	public List<Pet> findPetsForAdoption(final String username){
 		
 		return this.petRepository.findPetsForAdoption(username);
 	}
 	
 	@Transactional
-	public List<Pet> findPetsNotAdoptionByUsername(String username){
+	public List<Pet> findPetsNotAdoptionByUsername(final String username){
 		
 		return this.petRepository.findPetsNotAdoptionByUsername(username);
 	}

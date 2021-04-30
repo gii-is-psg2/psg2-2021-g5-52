@@ -65,26 +65,6 @@ public class PetController {
 	public Collection<PetType> populatePetTypes() {
 		return this.petService.findPetTypes();
 	}
-	/*
-	 * Si activamos este método findOwner, deja de funcionar el método de "deletePet" de este controlador
-	 * 
-	 * @ModelAttribute("owner")
-	 * public Owner findOwner(@PathVariable("ownerId") int ownerId) {
-	 * return this.ownerService.findOwnerById(ownerId);
-	 * }
-	 */
-
-	/*
-	 * @ModelAttribute("pet")
-	 * public Pet findPet(@PathVariable("petId") Integer petId) {
-	 * Pet result=null;
-	 * if(petId!=null)
-	 * result=this.clinicService.findPetById(petId);
-	 * else
-	 * result=new Pet();
-	 * return result;
-	 * }
-	 */
 
 	@InitBinder("owner")
 	public void initOwnerBinder(final WebDataBinder dataBinder) {
@@ -127,17 +107,7 @@ public class PetController {
 		model.put("pet", pet);
 		return PetController.VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 	}
-
-	/**
-	 *
-	 * @param pet
-	 * @param result
-	 * @param petId
-	 * @param model
-	 * @param owner
-	 * @param model
-	 * @return
-	 */
+	
 	@PostMapping(value = "/pets/{petId}/edit")
 	public String processUpdateForm(@Valid final Pet pet, final BindingResult result, final Owner owner, @PathVariable("petId") final int petId, final ModelMap model) {
 		if (result.hasErrors()) {
@@ -160,8 +130,6 @@ public class PetController {
 	public String deletePet(@PathVariable("petId") final int petId, final ModelMap model) {
 		final Pet pet = this.petService.findPetById(petId);
 		try {
-
-			System.out.println(pet);
 			this.petService.deletePetAndVisists(pet);
 			model.addAttribute("message", "¡Mascota correctamente eliminada!");
 

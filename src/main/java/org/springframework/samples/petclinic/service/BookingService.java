@@ -31,34 +31,18 @@ public class BookingService {
 
 		final LocalDate newStartDate = booking.getStartDate();
 		final LocalDate newEndDate = booking.getEndDate();
+		final LocalDate today = LocalDate.now();
 
-		if (newStartDate.compareTo(newEndDate) > 0)
-			throw new BookingSavingException("La fecha de inicio debe ser anterior a la fecha de fin");
+		if (newStartDate.compareTo(newEndDate) > 0) {
+			throw new BookingSavingException("La fecha de fin debe ser posterior a la fecha de inicio");
+		}
 
-		if (newStartDate.compareTo(LocalDate.now()) < 0 || newEndDate.compareTo(LocalDate.now()) < 0)
+		else if (newStartDate.compareTo(today) < 0 || newEndDate.compareTo(today) < 0) {
 			throw new BookingSavingException("La reserva debe ser para días posteriores al día de hoy");
+		}
 
 		for (final Booking old : oldBookings) {
-
-			final LocalDate oldStartDate = old.getStartDate();
-			final LocalDate oldEndDate = old.getEndDate();
-
-			if ((oldStartDate.compareTo(newStartDate) <= 0 && oldEndDate.compareTo(newStartDate) >= 0)) {
-				throw new BookingSavingException("La fecha de inicio de la nueva reserva está dentro de otra reserva");
-			}
-
-			if ((oldStartDate.compareTo(newEndDate) <= 0 && oldEndDate.compareTo(newEndDate) >= 0)) {
-				throw new BookingSavingException("La fecha de fin de la nueva reserva está dentro de otra reserva");
-			}
-
-			if ((newStartDate.compareTo(oldStartDate) <= 0 && newEndDate.compareTo(oldStartDate) >= 0)) {
-				throw new BookingSavingException("La fecha de inicio de otra reserva está dentro de la nueva reserva");
-			}
-
-			if ((newStartDate.compareTo(oldEndDate) <= 0 && newEndDate.compareTo(oldEndDate) >= 0)) {
-				throw new BookingSavingException("La fecha de fin de otra reserva está dentro de la nueva reserva");
-			}
-
+			old.checkConcurrency(newStartDate, newEndDate);
 		}
 
 		this.bookingRepository.save(booking);

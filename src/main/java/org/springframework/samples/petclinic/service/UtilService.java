@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UtilService {
 	@Transactional
 	public double aproximarNumero(Double numero) { //Aproxima un  Double a 2 decimales
-		double numeroAproximado=Math.round(numero * 100d) / 100d;
-		return numeroAproximado;
+		return Math.round(numero * 100d) / 100d;
 	}
 	
 	@Transactional

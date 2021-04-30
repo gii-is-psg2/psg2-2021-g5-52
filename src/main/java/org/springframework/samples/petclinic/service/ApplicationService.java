@@ -1,7 +1,7 @@
+
 package org.springframework.samples.petclinic.service;
 
 import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,82 +12,79 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Application;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.ApplicationRepository;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ApplicationService {
 
-	private final ApplicationRepository applicationRepository;
-	private final OwnerService ownerService;
-	private final PetService petService;
+	private final ApplicationRepository	applicationRepository;
+	private final OwnerService			ownerService;
+	private final PetService			petService;
+
 
 	@Autowired
-	public ApplicationService(final ApplicationRepository applicationRepository, final OwnerService ownerService, PetService petService) {
+	public ApplicationService(final ApplicationRepository applicationRepository, final OwnerService ownerService, final PetService petService) {
 		this.applicationRepository = applicationRepository;
-		this.ownerService=ownerService;
-		this.petService=petService;
+		this.ownerService = ownerService;
+		this.petService = petService;
 	}
 
 	@Transactional
-	public void newApplication(final Principal p,final Application application) {
-	
-		final Owner owner= this.ownerService.findOwnerByUsername(p.getName());
+	public void newApplication(final Principal p, final Application application) {
+
+		final Owner owner = this.ownerService.findOwnerByUsername(p.getName());
 		application.setOwner(owner);
-		
+
 		this.save(application);
-		
+
 	}
 	@Transactional
 	public void save(final Application application) {
-		
+
 		this.applicationRepository.save(application);
-		
+
 	}
-	
-	@Transactional	
+
+	@Transactional
 	public Iterable<Application> findAll() throws DataAccessException {
-		return applicationRepository.findAll();
-	}	
-	
-	@Transactional
-	public List<Application> findApplicationsToMeNotClosed(String username) throws DataAccessException{
-		
-		return applicationRepository.findAplicationsToMeNotClosed(username);
-	
+		return this.applicationRepository.findAll();
 	}
-	
+
 	@Transactional
-	public boolean isApplicationToMe(String username,Application app) {
-		boolean res= false;
-		if(app.getPet().getOwner().getUser().getUsername().equals(username)) {
-			res= true;
+	public List<Application> findApplicationsToMeNotClosed(final String username) throws DataAccessException {
+
+		return this.applicationRepository.findAplicationsToMeNotClosed(username);
+
+	}
+
+	@Transactional
+	public boolean isApplicationToMe(final String username, final Application app) {
+		boolean res = false;
+		if (app.getPet().getOwner().getUser().getUsername().equals(username)) {
+			res = true;
 		}
 		return res;
 	}
-	
+
 	@Transactional
-	public Optional<Application> findById(int id) {
-		return applicationRepository.findById(id);
+	public Optional<Application> findById(final int id) {
+		return this.applicationRepository.findById(id);
 	}
-	
+
 	@Transactional
-	public void rejectApplication(Application app) {
+	public void rejectApplication(final Application app) {
 		app.setClosed(true);
-		applicationRepository.save(app);
+		this.applicationRepository.save(app);
 	}
-	
+
 	@Transactional
-	public void aceptApplication(Application app) {
-		Pet pet= app.getPet();
+	public void aceptApplication(final Application app) throws DuplicatedPetNameException {
+		final Pet pet = app.getPet();
 		pet.setOwner(app.getOwner());
-		try {
-			petService.savePet(pet);
-		}catch(Exception e) {
-			
-		}
+		this.petService.savePet(pet);
 		app.setClosed(true);
-		applicationRepository.save(app);
+		this.applicationRepository.save(app);
 	}
 }

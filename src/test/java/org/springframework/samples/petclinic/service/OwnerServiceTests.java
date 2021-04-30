@@ -15,9 +15,9 @@
  */
 package org.springframework.samples.petclinic.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collection;
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -65,59 +65,59 @@ class OwnerServiceTests {
 	@Test
 	void shouldFindOwnersByLastName() {
 		Collection<Owner> owners = this.ownerService.findOwnerByLastName("Davis");
-		assertThat(owners.size()).isEqualTo(2);
+		Assertions.assertThat(owners).hasSize(2);
 
 		owners = this.ownerService.findOwnerByLastName("Daviss");
-		assertThat(owners.isEmpty()).isTrue();
+		Assertions.assertThat(owners).isEmpty();
 	}
 
 	@Test
-    void shouldFindSingleOwnerWithPet() {
-        final Owner owner = this.ownerService.findOwnerById(1);
-        Assertions.assertThat(owner.getLastName()).startsWith("Franklin");
-        Assertions.assertThat(owner.getPets().size()).isEqualTo(2);
-        Assertions.assertThat(owner.getPets().get(0).getType()).isNotNull();
-        Assertions.assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("hamster");
-    }
-
+	void shouldFindSingleOwnerWithPet() {
+		final Owner owner = this.ownerService.findOwnerById(1);
+		Assertions.assertThat(owner.getLastName()).startsWith("Franklin");
+		Assertions.assertThat(owner.getPets().size()).isEqualTo(1);
+		Assertions.assertThat(owner.getPets().get(0).getType()).isNotNull();
+		Assertions.assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("cat");
+	}
+  
 	@Test
 	@Transactional
 	public void shouldInsertOwner() {
 		Collection<Owner> owners = this.ownerService.findOwnerByLastName("Schultz");
-		int found = owners.size();
+		final int found = owners.size();
 
-		Owner owner = new Owner();
+		final Owner owner = new Owner();
 		owner.setFirstName("Sam");
 		owner.setLastName("Schultz");
 		owner.setAddress("4, Evans Street");
 		owner.setCity("Wollongong");
 		owner.setTelephone("4444444444");
-                User user=new User();
+                final User user=new User();
                 user.setUsername("Sam");
                 user.setPassword("supersecretpassword");
                 user.setEnabled(true);
                 owner.setUser(user);                
                 
 		this.ownerService.saveOwner(owner);
-		assertThat(owner.getId().longValue()).isNotEqualTo(0);
+		Assertions.assertThat(owner.getId().longValue()).isNotZero();
 
 		owners = this.ownerService.findOwnerByLastName("Schultz");
-		assertThat(owners.size()).isEqualTo(found + 1);
+		Assertions.assertThat(owners).hasSize(found + 1);
 	}
 
 	@Test
 	@Transactional
 	void shouldUpdateOwner() {
 		Owner owner = this.ownerService.findOwnerById(1);
-		String oldLastName = owner.getLastName();
-		String newLastName = oldLastName + "X";
+		final String oldLastName = owner.getLastName();
+		final String newLastName = oldLastName + "X";
 
 		owner.setLastName(newLastName);
 		this.ownerService.saveOwner(owner);
 
 		// retrieving new name from database
 		owner = this.ownerService.findOwnerById(1);
-		assertThat(owner.getLastName()).isEqualTo(newLastName);
+		Assertions.assertThat(owner.getLastName()).isEqualTo(newLastName);
 	}
 
 

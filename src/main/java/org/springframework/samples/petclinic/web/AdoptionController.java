@@ -8,33 +8,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Application;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.service.ApplicationService;
-import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class AdoptionController {
 
-	private static String VIEWS_ADOPTION_CREATE_FORM = "adoptions/createAdoptionsForm";
-
-	private final ApplicationService applicationService;
 	private final PetService petService;
-	private final OwnerService ownerService;
 
 	@Autowired
-	public AdoptionController(final ApplicationService applicationService, final PetService petService, final OwnerService ownerService) {
+	public AdoptionController(final ApplicationService applicationService, final PetService petService) {
 		super();
-		this.applicationService = applicationService;
 		this.petService = petService;
-		this.ownerService = ownerService;
 	}
 
 	@GetMapping(value = { "/adoptions" })
-	public String showPetsForAdoptionList(final Map<String, Object> model, Principal p) {
-		List<Pet> petsForAdoption= this.petService.findPetsForAdoption(p.getName());
+	public String showPetsForAdoptionList(final Map<String, Object> model, final Principal p) {
+		final List<Pet> petsForAdoption= this.petService.findPetsForAdoption(p.getName());
 		model.put("pets", petsForAdoption);
 		
 		return "adoptions/petsForAdoption";
@@ -49,7 +41,7 @@ public class AdoptionController {
 	}
 
 	@GetMapping(value = "/adoptions/pet/{petId}")
-	public String createAdoption(final Map<String, Object> model, final Principal p, @PathVariable("petId")  int petId) {
+	public String createAdoption(final Map<String, Object> model, final Principal p, @PathVariable("petId") final  int petId) {
 		
 		
 		if(this.petService.isOwnerOf(petId, p.getName())) {
@@ -64,8 +56,7 @@ public class AdoptionController {
 
 	@GetMapping("/adoptions/{adoptionId}")
 	public String showAdoption(@PathVariable("adoptionId") final int adoptionId, final Map<String, Object> model) {
-		Application adoption = new Application();
-//		adoption = this.applicationService.getAdoptionsById(adoptionId).get();
+		final Application adoption = new Application();
 		model.put("adoption", adoption);
 		return "adoptions/adoptionDetails";
 	}

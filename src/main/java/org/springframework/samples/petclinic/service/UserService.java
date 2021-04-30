@@ -50,16 +50,16 @@ public class UserService {
 		user.setEnabled(true);
 		this.userRepository.save(user);
 	}
-	
+
 	@Transactional
-	public boolean userHaveRol(String username, String rol) {
-		boolean res= false;
-		Optional<User> user=this.findUser(username);
-		if(user.isPresent()) {
-			Set<Authorities> roles= user.get().getAuthorities();
-			for (Authorities a:roles) {
-				if(a.getAuthority().equals(rol)) {
-					res=true;
+	public boolean userHaveRol(final String username, final String rol) {
+		boolean res = false;
+		final Optional<User> user = this.findUser(username);
+		if (user.isPresent()) {
+			final Set<Authorities> roles = user.get().getAuthorities();
+			for (final Authorities a : roles) {
+				if (a.getAuthority().equals(rol)) {
+					res = true;
 					break;
 				}
 			}
@@ -72,18 +72,16 @@ public class UserService {
 
 	public User getUserSession() {
 		User usuario = new User();
-		try {
-			final Optional<User> user = this.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
-			if (user.isPresent()) usuario = user.get();
-		} catch (final Exception e) {
+		final Optional<User> user = this.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (user.isPresent()) {
+			usuario = user.get();
 		}
 		return usuario;
 	}
-	
-	
+
 	@Transactional
-	public void deleteUser(User user) throws DataAccessException {
-		userRepository.delete(user);
+	public void deleteUser(final User user) throws DataAccessException {
+		this.userRepository.delete(user);
 	}
-	
+
 }
