@@ -79,7 +79,7 @@ class OwnerServiceTests {
 		Assertions.assertThat(owner.getPets().get(0).getType()).isNotNull();
 		Assertions.assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("cat");
 	}
-
+  
 	@Test
 	@Transactional
 	public void shouldInsertOwner() {
