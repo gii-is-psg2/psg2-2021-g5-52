@@ -21,11 +21,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Booking;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.samples.petclinic.repository.VisitRepository;
+import org.springframework.samples.petclinic.service.exceptions.BookingSavingException;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,22 +43,15 @@ import org.springframework.util.StringUtils;
 public class PetService {
 
 	private final PetRepository		petRepository;
-	private final VisitRepository	visitRepository;
-<<<<<<< HEAD
-	private final VisitService visitService;
-
-	@Autowired
-	public PetService(final PetRepository petRepository, final VisitRepository visitRepository, final VisitService visitService) {
-=======
 	private final BookingService	bookingService;
 	private final VisitService visitService;
 
+
 	@Autowired
 	public PetService(final PetRepository petRepository, final VisitRepository visitRepository, final BookingService bookingService, final VisitService visitService) {
->>>>>>> 5d2015469ecb28fcc199ef61898a7758432e70e5
 		this.petRepository = petRepository;
-		this.visitRepository = visitRepository;
 		this.visitService=visitService;
+		this.bookingService=bookingService;
 
 	}
 
@@ -66,7 +61,7 @@ public class PetService {
 	}
 	@Transactional
 	public void saveVisit(final Visit visit) throws DataAccessException {
-		this.visitRepository.save(visit);
+		this.visitService.save(visit);
 	}
 	
 	@Transactional
@@ -103,14 +98,16 @@ public class PetService {
 	}
 
 	public Collection<Visit> findVisitsByPetId(final int petId) {
-		return this.visitRepository.findByPetId(petId);
+		return this.visitService.findByPetId(petId);
 	}
 
-<<<<<<< HEAD
-=======
 	@Transactional
-	public void saveBooking(final Booking booking) throws DataAccessException {
-		this.bookingService.saveBooking(booking);
+	public void saveBooking(final Booking booking) throws BookingSavingException {
+		try {
+			this.bookingService.saveBooking(booking);
+		} catch (Exception e) {
+			
+		}
 	}
 	
 	@Transactional
@@ -139,5 +136,4 @@ public class PetService {
 	}
 
 
->>>>>>> 5d2015469ecb28fcc199ef61898a7758432e70e5
 }
