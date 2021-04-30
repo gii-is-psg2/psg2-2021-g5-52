@@ -51,6 +51,7 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	@Query("SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName%")
 	public Collection<Owner> findByLastName(@Param("lastName") String lastName);
 
+	
 
 	/**
 	 * Retrieve an <code>Owner</code> from the data store by id.
