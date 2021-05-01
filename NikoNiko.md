@@ -45,6 +45,15 @@
 | 23/04/2021    |    :smile: (Meaning that I am learning, I like the work and I think I can do it without problems, but with some effort) |
 | 30/04/2021    |    :neutral_face: (Meaning that I feel I had to struggle, but the assigned work was fair and the day productive)| 
 
+| Day           | vicdiacor |
+| ------------- | ------------- |
+| 09/04/2021    |    :smiley: (Meaning that there is motivation for this new Sprint) |
+| 16/04/2021    |    :smiley: (Meaning that work was easy and completed without any issues) |
+| 18/04/2021    |    :smiley: (Meaning that there is a good comunication in the project) |
+| 22/04/2021    |    😃: (Meaning that the project continues to advance) |
+| 23/04/2021    |    😐: (Meaning that We can't spend a lot of time on the project due to tests) | 
+| 30/04/2021    |    😃: (Meaning that We are going to finish the project) | 
+
 ## Sprint Template
 
 | Day           | alvcorcas    | josgrarom  | antsuagar     | elenolcar     | vicdiacor    | alemorgar4     |
@@ -59,7 +68,7 @@
 | 20/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
 | 21/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
 | 22/04/2021    | :smile:         |      :smiley:         |       :smiley:      |    :smile:          |   :smiley:          |     :smiley:           |
-| 23/04/2021    | :hourglass: |     :neutral_face:         |       :smiley:    |   :smile:         |   :smiley:          |       -         |
+| 23/04/2021    | :hourglass: |     :neutral_face:         |       :smiley:    |   :smile:         |   😐:          |       -         |
 | 24/04/2021    | -        |      -          |      -     |   -         |   -           |       -         |
 | 25/04/2021    | -        |      -          |       -    |   -         |   -           |       -         |
 | 26/04/2021    | -        |      -          |       :fearful:    |   -         |   -           |       -         |
