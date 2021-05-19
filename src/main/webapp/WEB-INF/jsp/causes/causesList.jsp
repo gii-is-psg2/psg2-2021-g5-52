@@ -47,8 +47,10 @@
                 <spring:url value="/donations/new/{causeId}" var="causeUrl">
                         <spring:param name="causeId" value="${cause.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(causeUrl)}">
-                    	<span class="glyphicon glyphicon-plus"></span></a>
+                    <a class="btn btn-default" href="${fn:escapeXml(causeUrl)}">
+                    	<span class="glyphicon glyphicon-plus"></span>
+                    	<fmt:message key="newDonation"/>
+                    	</a>
                 </td>             
             </tr>
         </c:forEach>
