@@ -9,7 +9,9 @@
     <jsp:attribute name="customScript">
         <script>
             $(function () {
-                $("#birthDate").datepicker({dateFormat: 'yy/mm/dd'});
+                $("#birthDate").datepicker({
+                	dateFormat: 'yy/mm/dd',
+                	maxDate: 0});
             });
         </script>
     </jsp:attribute>

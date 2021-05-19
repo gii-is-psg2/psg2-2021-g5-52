@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Controller;
@@ -51,13 +52,15 @@ public class PetController {
 	private static final String		VIEWS_PETS_CREATE_OR_UPDATE_FORM	= "pets/createOrUpdatePetForm";
 
 	private final PetService		petService;
+	private final OwnerService		ownerService;
 	private final OwnerController	ownerController;
 
 
 	@Autowired
-	public PetController(final PetService petService, final OwnerController ownerController) {
+	public PetController(final PetService petService, final OwnerService ownerService, final OwnerController ownerController) {
 		this.petService = petService;
 		this.ownerController = ownerController;
+		this.ownerService = ownerService;
 
 	}
 
@@ -77,20 +80,22 @@ public class PetController {
 	}
 
 	@GetMapping(value = "/pets/new")
-	public String initCreationForm(final Owner owner, final ModelMap model) {
+	public String initCreationForm(@PathVariable("ownerId") final int ownerId, final ModelMap model) {
 		final Pet pet = new Pet();
+		final Owner owner = this.ownerService.findOwnerById(ownerId);
 		owner.addPet(pet);
 		model.put("pet", pet);
 		return PetController.VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping(value = "/pets/new")
-	public String processCreationForm(final Owner owner, @Valid final Pet pet, final BindingResult result, final ModelMap model) {
+	public String processCreationForm(@Valid final Pet pet, @PathVariable("ownerId") final int ownerId, final BindingResult result, final ModelMap model) {
 		if (result.hasErrors()) {
 			model.put("pet", pet);
 			return PetController.VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		} else {
 			try {
+				final Owner owner = this.ownerService.findOwnerById(ownerId);
 				owner.addPet(pet);
 				this.petService.savePet(pet);
 			} catch (final DuplicatedPetNameException ex) {
@@ -131,7 +136,7 @@ public class PetController {
 		final Pet pet = this.petService.findPetById(petId);
 		try {
 			this.petService.deletePetAndVisists(pet);
-			model.addAttribute("message", "¡Mascota correctamente eliminada!");
+			model.addAttribute("message", "Â¡Mascota correctamente eliminada!");
 
 		} catch (final DataAccessException e) {
 
