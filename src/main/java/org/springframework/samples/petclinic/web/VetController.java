@@ -78,15 +78,7 @@ public class VetController {
 		return "vets/vetList";
 	}
 
-	@GetMapping(value = { "/vets.xml"})
-	public @ResponseBody Vets showResourcesVetList() {
-		// Here we are returning an object of type 'Vets' rather than a collection of Vet
-		// objects
-		// so it is simpler for JSon/Object mapping
-		Vets vets = new Vets();
-		vets.getVetList().addAll(this.vetService.findVets());
-		return vets;
-	}
+	
 
 	
 	@GetMapping(value = { "/vets/new" })
