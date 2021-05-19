@@ -17,7 +17,6 @@ package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
@@ -70,12 +69,12 @@ public class OwnerService {
 	public void delete(Owner owner) throws DataAccessException{
 		//Remove all owner´s pets
 		for(Pet p:owner.getPets()){
-			petService.deletePetAndVisists(p);
+			this.petService.deletePetAndVisists(p);
 		}
 		//Delete owner´s user
-		userService.deleteUser(owner.getUser());
+		this.userService.deleteUser(owner.getUser());
 		//Delete owner
-		ownerRepository.delete(owner);
+		this.ownerRepository.delete(owner);
 		
 	}
 

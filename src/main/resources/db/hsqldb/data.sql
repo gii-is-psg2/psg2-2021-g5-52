@@ -89,12 +89,12 @@ INSERT INTO booking(id,start_date,end_date,pet_id) VALUES (3,'2013-01-03','2013-
 INSERT INTO booking(id,start_date,end_date,pet_id) VALUES (4,'2013-01-04','2013-01-05',4);
 
 
-INSERT INTO causes(id,owner_id,name,description,budget_target,organization) VALUES (1,4,'Causa1','Descripción1',200.15,'ONG 1');
+INSERT INTO causes(id,name,description,budget_target,organization) VALUES (1,'Causa1','Descripción1',200.15,'ONG 1');
 INSERT INTO donations(id,amount,date,causa_id,owner_id) VALUES (1,30.0,'2021-04-16',1,1);
 INSERT INTO donations(id,amount,date,causa_id,owner_id) VALUES (2,10.0,'2021-04-16',1,2);
 
 
-INSERT INTO causes(id,owner_id,name,description,budget_target,organization) VALUES (2,1,'Causa2','Descripción2',1000.0,'ONG 2');
+INSERT INTO causes(id,name,description,budget_target,organization) VALUES (2,'Causa2','Descripción2',1000.0,'ONG 2');
 INSERT INTO donations(id,amount,date,causa_id,owner_id) VALUES (3,250.0,'2021-04-16',2,1);
 INSERT INTO donations(id,amount,date,causa_id,owner_id) VALUES (4,700.0,'2021-04-16',2,2);
 

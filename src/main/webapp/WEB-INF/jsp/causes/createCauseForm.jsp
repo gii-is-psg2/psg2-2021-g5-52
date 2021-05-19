@@ -16,10 +16,10 @@
     </h2>
     <form:form modelAttribute="cause" class="form-horizontal" id="add-causes-form">
         <div class="form-group has-feedback">
-            <petclinic:inputFieldInt  name="name"/>
-            <petclinic:inputFieldInt  name="description"/>
-            <petclinic:inputFieldInt name="budgetTarget"/>
-            <petclinic:inputFieldInt  name="organization"/>
+            <petclinic:inputField  label ="Name" name="name"/>
+            <petclinic:inputField  label ="Description" name="description"/>
+            <petclinic:inputFieldNumber name="budgetTarget"/>
+            <petclinic:inputField  label ="Organization" name="organization"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

@@ -15,10 +15,6 @@
             <td><b><c:out value="${cause.name}"/></b></td>
         </tr>
         <tr>
-            <th><fmt:message key="ownerRequest"/></th>
-            <td><b><c:out value="${cause.owner.firstName}"/></b></td>
-        </tr>
-        <tr>
             <th><fmt:message key="description"/></th>
             <td><c:out value="${cause.description}"/></td>
         </tr>
