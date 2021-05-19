@@ -16,15 +16,12 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.OwnerService;
@@ -52,14 +49,10 @@ public class OwnerController {
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
 	private final OwnerService ownerService;
-	private final UserService userService;
-	private final AuthoritiesService authoritiesService;
 
 	@Autowired
 	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService) {
 		this.ownerService = ownerService;	
-		this.userService = userService;
-		this.authoritiesService = authoritiesService;
 		}
 
 	@InitBinder
@@ -89,47 +82,26 @@ public class OwnerController {
 	
 	@GetMapping(value="owners/delete/{ownerId}")
 	public String deleteOwner(@PathVariable("ownerId") int ownerId,ModelMap modelMap) {
-		List<Authorities> a = this.userService.getUserSession().getAuthorities().stream().collect(Collectors.toList()); 
-		Integer admin = 0;
-		for(int i = 0;i<a.size();i++) {
-			if(a.get(i).getAuthority().equals("admin")) {
-				admin = 1;
-			}
-		}
-		if(admin==0){
-			return "welcome";
-		}else {
-			Owner owner= this.ownerService.findOwnerById(ownerId);
-			try {
-				this.ownerService.delete(owner);
-				modelMap.addAttribute("message", "¡Propietario correctamente eliminado!");
-					
-			}catch(DataAccessException exception) {
-					
-					modelMap.addAttribute("message", "El propietario no pudo ser eliminado");
-			}
+		
+		Owner owner= this.ownerService.findOwnerById(ownerId);
+		try {
+			this.ownerService.delete(owner);
+			modelMap.addAttribute("message", "¡Propietario correctamente eliminado!");
 				
-			return this.initFindForm(modelMap);
+		}catch(DataAccessException exception) {
+				
+				modelMap.addAttribute("message", "El propietario no pudo ser eliminado");
 		}
+			
+		return this.initFindForm(modelMap);
 	}
 	
 	
 
 	@GetMapping(value = "/owners/find")
 	public String initFindForm(Map<String, Object> model) {
-		List<Authorities> a = this.userService.getUserSession().getAuthorities().stream().collect(Collectors.toList()); 
-		Integer admin = 0;
-		for(int i = 0;i<a.size();i++) {
-			if(a.get(i).getAuthority().equals("admin")) {
-				admin = 1;
-			}
-		}
-		if(admin==0){
-			return "welcome";
-		}else {
-			model.put("owner", new Owner());
-			return "owners/findOwners";
-		}
+		model.put("owner", new Owner());
+		return "owners/findOwners";
 	}
 
 	@GetMapping(value = "/owners")
@@ -161,21 +133,9 @@ public class OwnerController {
 
 	@GetMapping(value = "/owners/{ownerId}/edit")
 	public String initUpdateOwnerForm(@PathVariable("ownerId") int ownerId, Model model) {
-		List<Authorities> a = this.userService.getUserSession().getAuthorities().stream().collect(Collectors.toList()); 
-		
-		Integer admin = 0;
-		for(int i = 0;i<a.size();i++) {
-			if(a.get(i).getAuthority().equals("admin")) {
-				admin = 1;
-			}
-		}
-		if(admin==0){
-			return "welcome";
-		}else {
-			Owner owner = this.ownerService.findOwnerById(ownerId);
-			model.addAttribute(owner);
-			return OwnerController.VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
-		}
+		Owner owner = this.ownerService.findOwnerById(ownerId);
+		model.addAttribute(owner);
+		return OwnerController.VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping(value = "/owners/{ownerId}/edit")
@@ -198,22 +158,9 @@ public class OwnerController {
 	 */
 	@GetMapping("/owners/{ownerId}")
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
-		List<Authorities> a = this.userService.getUserSession().getAuthorities().stream().collect(Collectors.toList()); 
-		Integer admin = 0;
-		for(int i = 0;i<a.size();i++) {
-			if(a.get(i).getAuthority().equals("admin")) {
-				admin = 1;
-			}
-		}
-		if(admin==0){
-			ModelAndView mav = new ModelAndView("welcome");
-			mav.addObject(this.ownerService.findOwnerById(ownerId));
-			return mav;
-		}else {
-			ModelAndView mav = new ModelAndView("owners/ownerDetails");
-			mav.addObject(this.ownerService.findOwnerById(ownerId));
-			return mav;
-		}
+		ModelAndView mav = new ModelAndView("owners/ownerDetails");
+		mav.addObject(this.ownerService.findOwnerById(ownerId));
+		return mav;
 	}
 
 }
