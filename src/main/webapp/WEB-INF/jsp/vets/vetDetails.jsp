@@ -11,7 +11,7 @@
     <h2><fmt:message key="vetInformation"/></h2>
 
 
-    <table class="table table-striped">
+    <table class="table bg-warning">
         <tr>
             <th><fmt:message key="name"/></th>
             <td><b><c:out value="${vet.firstName} ${vet.lastName}"/></b></td>

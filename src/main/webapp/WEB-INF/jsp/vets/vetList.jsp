@@ -16,7 +16,7 @@
        	<a class="btn btn-default" href="${fn:escapeXml(vetsUrl)}"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="newVeterinarians"/></a>    
     </td>
 
-    <table id="vetsTable" class="table table-striped">
+    <table id="vetsTable" class="table bg-warning">
         <thead>
         <tr>
             <th><fmt:message key="firstName"/></th>

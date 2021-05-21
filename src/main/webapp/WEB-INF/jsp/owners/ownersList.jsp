@@ -8,7 +8,7 @@
 <petclinic:layout pageName="owners">
     <h2><fmt:message key="owners"/></h2>
 
-    <table id="ownersTable" class="table table-striped">
+    <table id="ownersTable" class="table bg-warning">
         <thead>
         <tr>
             <th style="width: 150px;"><fmt:message key="firstName"/></th>

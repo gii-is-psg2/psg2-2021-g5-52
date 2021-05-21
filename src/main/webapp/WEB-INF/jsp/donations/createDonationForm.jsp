@@ -14,7 +14,7 @@
      <h2><fmt:message key="causeInformation"/></h2>
 
 
-    <table class="table table-striped">
+    <table class="table bg-warning">
         <tr>
             <th><fmt:message key="name"/></th>
             <td><b><c:out value="${donation.cause.name}"/></b></td>
