@@ -22,7 +22,8 @@
     
     <h2><fmt:message key="listPetsForAdoption"/></h2>
     
-    <table class="table table-striped">
+    <table class="table bg-warning">
+         <thead>
          <tr>
           
             <th><fmt:message key="name"/></th>
@@ -31,6 +32,8 @@
             <th><fmt:message key="newAdoption"/></th>
  		
         </tr>
+        </thead>
+        <tbody>
         <tr>
 	         <c:forEach var="pet" items="${pets}">
 	         
@@ -50,6 +53,7 @@
 	         <a href="${fn:escapeXml(applicationsUrl)}"><fmt:message key="adopt"/></a>
 	         </td>
          </tr>
+         </tbody>
          </c:forEach>
                 
         

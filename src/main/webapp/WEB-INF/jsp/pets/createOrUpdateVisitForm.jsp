@@ -17,7 +17,7 @@
         <h2><c:if test="${visit['new']}"><fmt:message key="new"/> </c:if><fmt:message key="visit"/></h2>
 
         <b>Pet</b>
-        <table class="table table-striped">
+        <table class="table bg-warning">
             <thead>
             <tr>
                 <th><fmt:message key="name"/></th>

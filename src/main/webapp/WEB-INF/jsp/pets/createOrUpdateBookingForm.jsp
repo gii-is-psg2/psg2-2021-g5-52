@@ -34,7 +34,7 @@
         <h2><fmt:message key="booking"/></h2>
 
         <b><fmt:message key="pet"/></b>
-        <table class="table table-striped">
+        <table class="table bg-warning">
             <thead>
             <tr>
                 <th><fmt:message key="name"/></th>

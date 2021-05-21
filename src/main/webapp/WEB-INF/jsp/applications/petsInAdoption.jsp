@@ -9,7 +9,7 @@
 
     <h2><fmt:message key="selectPetsInAdoption"/></h2>
     
-	<table class="table table-striped">
+	<table class="table bg-warning">
           <tr>
           
             <th><fmt:message key="name"/></th>

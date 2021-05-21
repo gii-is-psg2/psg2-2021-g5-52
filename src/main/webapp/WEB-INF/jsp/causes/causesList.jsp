@@ -14,7 +14,7 @@
     <a class="btn btn-default" href="${fn:escapeXml(causesUrl)}"><span class="glyphicon glyphicon-plus"></span> <fmt:message key="newCause"/></a>    
     </td>
     <br> </br>
-    <table id="causesTable" class="table table-striped">
+    <table id="causesTable" class="table bg-warning">
         <thead>
         <tr>
             <th style="width: 150px;"><fmt:message key="name"/></th>
